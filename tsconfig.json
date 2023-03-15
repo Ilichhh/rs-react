@@ -16,7 +16,7 @@
     "resolveJsonModule": true
   },
   "include": [
-    "./src/**/*", 
+    "src", 
     "styled.d.ts", 
     "vite.config.ts",
     ".eslintrc.json"
