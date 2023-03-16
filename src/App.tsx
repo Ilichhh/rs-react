@@ -4,4 +4,4 @@ function App() {
   return <div>Hello world</div>;
 }
 
-export default;
+export default App;
