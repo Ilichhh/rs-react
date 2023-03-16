@@ -6,8 +6,8 @@ import Home from './pages/Home';
 import Error from './pages/Error';
 import './App.scss';
 
-function App() {
-  return (
+class App extends React.Component {
+  render = () => (
     <div className="container">
       <header className="header">
         <Link className="header__link" to="/">

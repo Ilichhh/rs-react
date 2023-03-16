@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Home() {
-  return <h1>Hello world</h1>;
+class Home extends React.Component {
+  render = () => <h1>Hello world</h1>;
 }
 
 export default Home;
