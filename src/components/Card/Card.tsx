@@ -1,22 +1,22 @@
 import React from 'react';
 import './Card.scss';
+import type { CardProps } from 'types';
 
-class Card extends React.Component {
-  render = () => (
-    <div className="card">
-      <img
-        src="https://images.blur.io/_blur-prod/0x60e4d786628fea6478f785a6d7e704777c86a7c6/24680-e4843c17252bc7d4?w=256"
-        alt=""
-        className="card__image"
-      />
-      <div className="card__description">
-        <div className="card__number">#7272</div>
-        <div className="card__price">13.499 ETH</div>
-        <div className="card__last-sale">Last sale: 13.100 ETH</div>
-        <div className="card__owner">Owner: Turpur</div>
+class Card extends React.Component<CardProps> {
+  render = () => {
+    const { imageSrc, id, price, lastPrice, owner } = this.props;
+    return (
+      <div className="card">
+        <img src={imageSrc} alt="" className="card__image" />
+        <div className="card__description">
+          <div className="card__number">#{id}</div>
+          <div className="card__price">{price} ETH</div>
+          <div className="card__last-sale">Last sale: {lastPrice} ETH</div>
+          <div className="card__owner">Owner: {owner}</div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 }
 
 export default Card;
