@@ -1,0 +1,9 @@
+@import '../../styles/variables';
+
+.search {
+  width: 200px;
+
+  &__input {
+    background-color: $bg-color;
+  }
+}

@@ -1,7 +1,16 @@
 import React from 'react';
+import Card from '../components/Card/Card';
+import SearchBar from '../components/SearchBar/SearchBar';
 
 class Home extends React.Component {
-  render = () => <h1>Hello world</h1>;
+  render = () => (
+    <>
+      <SearchBar />
+      <div>
+        <Card />
+      </div>
+    </>
+  );
 }
 
 export default Home;
