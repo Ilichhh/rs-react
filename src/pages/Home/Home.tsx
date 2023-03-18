@@ -5,9 +5,13 @@ import { data } from '../../fakeData';
 import './Home.scss';
 
 class Home extends React.Component {
+  handleSearch = (searchValue: string) => {
+    console.log(searchValue);
+  };
+
   render = () => (
     <div className="home">
-      <SearchBar />
+      <SearchBar onSearch={this.handleSearch} />
       <div className="cards-wrapper">
         {data.map((item) => (
           <Card
