@@ -6,7 +6,7 @@ import './Home.scss';
 
 class Home extends React.Component {
   render = () => (
-    <>
+    <div className="home">
       <SearchBar />
       <div className="cards-wrapper">
         {data.map((item) => (
@@ -20,7 +20,7 @@ class Home extends React.Component {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -8,21 +8,25 @@ import './App.scss';
 
 class App extends React.Component {
   render = () => (
-    <div className="container">
+    <>
       <header className="header">
-        <Link className="header__link" to="/">
-          Home
-        </Link>
-        <Link className="header__link" to="/about">
-          About Us
-        </Link>
+        <div className="container">
+          <Link className="header__link" to="/">
+            Home
+          </Link>
+          <Link className="header__link" to="/about">
+            About Us
+          </Link>
+        </div>
       </header>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="*" element={<Error />} />
-      </Routes>
-    </div>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
