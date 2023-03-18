@@ -1,10 +1,14 @@
 import React from 'react';
 import './Card.scss';
-import type { CardProps } from 'types';
+import type { CardData } from 'types';
+
+interface CardProps {
+  data: CardData;
+}
 
 class Card extends React.Component<CardProps> {
   render = () => {
-    const { imageSrc, id, price, lastPrice, owner } = this.props;
+    const { imageSrc, id, price, lastPrice, owner } = this.props.data;
     return (
       <div className="card">
         <img src={imageSrc} alt="" className="card__image" />

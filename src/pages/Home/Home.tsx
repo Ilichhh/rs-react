@@ -14,14 +14,7 @@ class Home extends React.Component {
       <SearchBar onSearch={this.handleSearch} />
       <div className="cards-wrapper">
         {data.map((item) => (
-          <Card
-            key={item.id}
-            id={item.id}
-            imageSrc={item.imageSrc}
-            price={item.price}
-            lastPrice={item.lastPrice}
-            owner={item.owner}
-          />
+          <Card key={item.id} data={item} />
         ))}
       </div>
     </div>

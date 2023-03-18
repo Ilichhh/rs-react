@@ -1,4 +1,4 @@
-export interface CardProps {
+export interface CardData {
   id: number;
   imageSrc: string;
   price: number;
