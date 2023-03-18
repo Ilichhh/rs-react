@@ -10,7 +10,7 @@ class Card extends React.Component<CardProps> {
   render = () => {
     const { imageSrc, id, price, lastPrice, owner } = this.props.data;
     return (
-      <div className="card">
+      <div className="card" data-testid="card">
         <img src={imageSrc} alt="Card preview" className="card__image" />
         <div className="card__description">
           <div className="card__number">#{id}</div>

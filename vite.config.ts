@@ -9,6 +9,9 @@ import eslint from 'vite-plugin-eslint';
 export default defineConfig({
   plugins: [react(), eslint()],
   test: {
+    coverage: {
+      provider: 'istanbul',
+    },
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/setupTests.ts'],
