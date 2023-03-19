@@ -11,6 +11,7 @@ class Home extends React.Component {
 
   render = () => (
     <div className="home">
+      <h1>Home page</h1>
       <SearchBar onSearch={this.handleSearch} />
       <div className="cards-wrapper">
         {data.map((item) => (
