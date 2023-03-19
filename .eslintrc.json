@@ -22,7 +22,7 @@
     "ecmaVersion": "latest",
 		"sourceType": "module"
   },
-  "ignorePatterns": ["dist/"],
+  "ignorePatterns": ["dist/",  "coverage/"],
   "plugins": [
     "@typescript-eslint", "react", "prettier", "react-hooks"
   ],
