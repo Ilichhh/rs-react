@@ -7,7 +7,6 @@ interface FormInputProps {
   label: string;
   defaultValue: string;
   pattern?: string;
-  required?: boolean;
   title?: string;
 }
 
@@ -20,7 +19,7 @@ class FormInput extends Component<FormInputProps> {
   }
 
   render() {
-    const { type, id, label, defaultValue, pattern, required, title } = this.props;
+    const { type, id, label, defaultValue, pattern, title } = this.props;
 
     return (
       <div className="form-input__wrapper">
@@ -31,7 +30,6 @@ class FormInput extends Component<FormInputProps> {
           value={defaultValue}
           placeholder=" "
           pattern={pattern}
-          required={required}
           title={title}
           ref={this.inputRef}
         />
