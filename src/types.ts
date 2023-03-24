@@ -5,3 +5,13 @@ export interface CardData {
   lastPrice: number;
   owner: string;
 }
+
+export interface ProductData {
+  title: string;
+  imageSrc: string;
+  date: string;
+}
+
+export interface Products {
+  products: ProductData[];
+}

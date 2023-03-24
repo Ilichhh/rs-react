@@ -1,13 +1,14 @@
 import React, { createRef, RefObject } from 'react';
 import FormInput from '../../components/FormInput/FormInput';
 import AddImageButton from '../../components/AddImageButton/AddImageButton';
+import { ProductData } from 'types';
 import './Form.scss';
 
 interface FormProps {
-  title?: string;
+  onAddProduct: (newProduct: ProductData) => void;
 }
 
-class Form extends React.Component {
+class Form extends React.Component<FormProps> {
   private inputTitleRef: RefObject<HTMLInputElement>;
 
   constructor(props: FormProps) {

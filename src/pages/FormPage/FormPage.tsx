@@ -1,16 +1,36 @@
 import React from 'react';
 import Form from '../../components/Form/Form';
+import ProductCard from '../../components/ProductCard/ProductCard';
+import { ProductData, Products } from 'types';
 import './FormPage.scss';
 
-class FormPage extends React.Component {
-  render = () => {
+class FormPage extends React.Component<never, Products> {
+  constructor(props: never) {
+    super(props);
+    this.state = {
+      products: [],
+    };
+  }
+
+  handleAddProduct = (newProduct: ProductData) => {
+    this.setState((prevState) => ({
+      products: [...prevState.products, newProduct],
+    }));
+  };
+
+  render() {
     return (
       <>
         <h1>Form</h1>
-        <Form />
+        <Form onAddProduct={this.handleAddProduct} />
+        <div className="cards-wrapper">
+          {this.state.products.map((item, index) => (
+            <ProductCard key={index} data={item} />
+          ))}
+        </div>
       </>
     );
-  };
+  }
 }
 
 export default FormPage;
