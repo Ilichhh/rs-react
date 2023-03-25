@@ -3,36 +3,17 @@ import './FormInput.scss';
 
 interface FormInputProps {
   type: string;
-  id: string;
   label: string;
-  defaultValue: string;
-  pattern?: string;
-  title?: string;
+  id: string;
+  inputRef: RefObject<HTMLInputElement>;
 }
 
 class FormInput extends Component<FormInputProps> {
-  inputRef: RefObject<HTMLInputElement>;
-
-  constructor(props: FormInputProps) {
-    super(props);
-    this.inputRef = React.createRef();
-  }
-
   render() {
-    const { type, id, label, defaultValue, pattern, title } = this.props;
-
+    const { type, label, id, inputRef } = this.props;
     return (
       <div className="form-input__wrapper">
-        <input
-          type={type}
-          className="form-input"
-          id={id}
-          value={defaultValue}
-          placeholder=" "
-          pattern={pattern}
-          title={title}
-          ref={this.inputRef}
-        />
+        <input type={type} className="form-input" id={id} placeholder=" " ref={inputRef} />
         <label htmlFor={id} className="form-input__label">
           {label}
         </label>
