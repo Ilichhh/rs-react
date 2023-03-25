@@ -8,6 +8,7 @@ export interface CardData {
 
 export interface ProductData {
   title: string;
+  price: number;
   imageSrc: string;
   date: string;
   network: string;

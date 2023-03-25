@@ -14,6 +14,7 @@ interface FormProps {
 
 class Form extends React.Component<FormProps, ProductData> {
   private titleInputRef: RefObject<HTMLInputElement>;
+  private priceInputRef: RefObject<HTMLInputElement>;
   private dateInputRef: RefObject<HTMLInputElement>;
   private imageInputRef: RefObject<HTMLInputElement>;
   private selectNetworkRef: RefObject<HTMLSelectElement>;
@@ -23,6 +24,7 @@ class Form extends React.Component<FormProps, ProductData> {
   constructor(props: FormProps) {
     super(props);
     this.titleInputRef = React.createRef();
+    this.priceInputRef = React.createRef();
     this.dateInputRef = React.createRef();
     this.imageInputRef = React.createRef();
     this.selectNetworkRef = React.createRef();
@@ -34,6 +36,7 @@ class Form extends React.Component<FormProps, ProductData> {
     e.preventDefault();
 
     const title = this.titleInputRef.current?.value ?? '';
+    const price = +(this.priceInputRef.current?.value ?? 0);
     const date = this.dateInputRef.current?.value ?? '';
     const imageFile = this.imageInputRef.current?.files?.[0];
     const network = this.selectNetworkRef.current?.value ?? '';
@@ -47,6 +50,7 @@ class Form extends React.Component<FormProps, ProductData> {
 
     this.props.onAddProduct({
       title,
+      price,
       imageSrc,
       date,
       network,
@@ -59,7 +63,8 @@ class Form extends React.Component<FormProps, ProductData> {
   render() {
     return (
       <form className="form" onSubmit={this.handleSubmit}>
-        <FormInput type="text" label="Item name" id="title" inputRef={this.titleInputRef} />
+        <FormInput type="text" label="Item Name" id="title" inputRef={this.titleInputRef} />
+        <FormInput type="number" label="Start Price" id="price" inputRef={this.priceInputRef} />
         <FormInput type="date" label="End of sale date" id="date" inputRef={this.dateInputRef} />
         <DropdownInput id="network" options={networks} inputRef={this.selectNetworkRef} />
         <AddImageButton inputRef={this.imageInputRef} />
