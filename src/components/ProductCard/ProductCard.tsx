@@ -11,7 +11,7 @@ class ProductCard extends React.Component<ProductDataProps> {
     const { title, imageSrc, date } = this.props.data;
     return (
       <div className="card" data-testid="card">
-        <img src={imageSrc} alt="Card preview" className="card__image" />
+        <img src={imageSrc} alt="Card preview" className="card__image" width="256" height="256" />
         <div className="card__description">
           <div className="card__number">{title}</div>
           <div className="card__price">{date}</div>
