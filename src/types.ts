@@ -10,6 +10,7 @@ export interface ProductData {
   title: string;
   imageSrc: string;
   date: string;
+  network: string;
 }
 
 export interface Products {

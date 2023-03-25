@@ -7,3 +7,5 @@ export interface CardProps {
 }
 
 export const data: CardProps[];
+
+export const networks: string[];
