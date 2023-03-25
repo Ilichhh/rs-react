@@ -66,3 +66,5 @@ export const data = [
 ];
 
 export const networks = ['Ethereum', 'Polygon', 'Optimism', 'Arbitrum', 'BNB Chain'];
+
+export const mainnetSelector = ['mainnet', 'testnet'];

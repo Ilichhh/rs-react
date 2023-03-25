@@ -3,7 +3,8 @@ import FormInput from '../../components/FormInput/FormInput';
 import AddImageButton from '../../components/AddImageButton/AddImageButton';
 import DropdownInput from '../../components/DropdownInput/DropdownInput';
 import Checkbox from '../../components/Checkbox/Checkbox';
-import { networks } from '../../fakeData';
+import RadioInput from '../../components/RadioInput/RadioInput';
+import { networks, mainnetSelector } from '../../fakeData';
 import { ProductData } from 'types';
 import './Form.scss';
 
@@ -16,6 +17,7 @@ class Form extends React.Component<FormProps, ProductData> {
   private dateInputRef: RefObject<HTMLInputElement>;
   private imageInputRef: RefObject<HTMLInputElement>;
   private selectNetworkRef: RefObject<HTMLSelectElement>;
+  private mainnetRef: RefObject<HTMLInputElement>[] = [];
   private agreementRef: RefObject<HTMLInputElement>;
 
   constructor(props: FormProps) {
@@ -24,6 +26,7 @@ class Form extends React.Component<FormProps, ProductData> {
     this.dateInputRef = React.createRef();
     this.imageInputRef = React.createRef();
     this.selectNetworkRef = React.createRef();
+    this.mainnetRef = mainnetSelector.map(() => React.createRef());
     this.agreementRef = React.createRef();
   }
 
@@ -34,6 +37,7 @@ class Form extends React.Component<FormProps, ProductData> {
     const date = this.dateInputRef.current?.value ?? '';
     const imageFile = this.imageInputRef.current?.files?.[0];
     const network = this.selectNetworkRef.current?.value ?? '';
+    const mainnet = this.mainnetRef.find((ref) => ref.current?.checked)?.current?.value ?? '';
     const agreement = this.agreementRef.current?.checked ?? false;
 
     let imageSrc = '';
@@ -46,9 +50,10 @@ class Form extends React.Component<FormProps, ProductData> {
       imageSrc,
       date,
       network,
+      mainnet,
       agreement,
     });
-    console.log(title, date, imageSrc);
+    console.log(title, date, imageSrc, mainnet);
   };
 
   render() {
@@ -58,6 +63,7 @@ class Form extends React.Component<FormProps, ProductData> {
         <FormInput type="date" label="date" id="date" inputRef={this.dateInputRef} />
         <DropdownInput id="network" options={networks} inputRef={this.selectNetworkRef} />
         <AddImageButton inputRef={this.imageInputRef} />
+        <RadioInput id="mainnet" options={mainnetSelector} inputRefs={this.mainnetRef} />
         <Checkbox
           label="I agree to never, ever, ever put pineapple on pizza"
           id="agreement"
