@@ -59,8 +59,8 @@ class Form extends React.Component<FormProps, ProductData> {
   render() {
     return (
       <form className="form" onSubmit={this.handleSubmit}>
-        <FormInput type="text" label="title" id="title" inputRef={this.titleInputRef} />
-        <FormInput type="date" label="date" id="date" inputRef={this.dateInputRef} />
+        <FormInput type="text" label="Item name" id="title" inputRef={this.titleInputRef} />
+        <FormInput type="date" label="End of sale date" id="date" inputRef={this.dateInputRef} />
         <DropdownInput id="network" options={networks} inputRef={this.selectNetworkRef} />
         <AddImageButton inputRef={this.imageInputRef} />
         <RadioInput id="mainnet" options={mainnetSelector} inputRefs={this.mainnetRef} />

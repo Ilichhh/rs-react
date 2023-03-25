@@ -21,12 +21,18 @@
     padding: 15px;
   }
 
+  &__title {
+    font-size: 18px;
+  }
+
   &__price {
     font-size: 24px;
   }
 
   &__last-sale,
-  &__owner {
+  &__owner,
+  &__date,
+  &__network {
     color: $secondary-color;
   }
   

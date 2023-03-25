@@ -4,8 +4,8 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 import { ProductData, Products } from 'types';
 import './FormPage.scss';
 
-class FormPage extends React.Component<never, Products> {
-  constructor(props: never) {
+class FormPage extends React.Component<object, Products> {
+  constructor(props: object) {
     super(props);
     this.state = {
       products: [],
@@ -21,8 +21,10 @@ class FormPage extends React.Component<never, Products> {
   render() {
     return (
       <>
-        <h1>Form</h1>
-        <Form onAddProduct={this.handleAddProduct} />
+        <div className="form-wrapper">
+          <h1>Place your NFT for sale</h1>
+          <Form onAddProduct={this.handleAddProduct} />
+        </div>
         <div className="cards-wrapper">
           {this.state.products.map((item, index) => (
             <ProductCard key={index} data={item} />
