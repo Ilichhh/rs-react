@@ -11,6 +11,7 @@ export interface ProductData {
   imageSrc: string;
   date: string;
   network: string;
+  agreement: boolean;
 }
 
 export interface Products {
