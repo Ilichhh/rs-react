@@ -12,7 +12,12 @@ interface FormProps {
   onAddProduct: (newProduct: ProductData) => void;
 }
 
-class Form extends React.Component<FormProps, ProductData> {
+interface FormState {
+  isValid: boolean;
+  titleError: string;
+}
+
+class Form extends React.Component<FormProps, FormState> {
   private titleInputRef: RefObject<HTMLInputElement>;
   private priceInputRef: RefObject<HTMLInputElement>;
   private dateInputRef: RefObject<HTMLInputElement>;
@@ -30,42 +35,71 @@ class Form extends React.Component<FormProps, ProductData> {
     this.selectNetworkRef = React.createRef();
     this.mainnetRef = mainnetSelector.map(() => React.createRef());
     this.agreementRef = React.createRef();
+    this.state = {
+      isValid: false,
+      titleError: '',
+    };
   }
+
+  validate = (product: ProductData): boolean => {
+    if (!product.title) {
+      this.setState({ titleError: 'Please enter a valid input' });
+      return false;
+    }
+    this.setState({ titleError: '' });
+    return true;
+  };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const title = this.titleInputRef.current?.value ?? '';
-    const price = +(this.priceInputRef.current?.value ?? 0);
-    const date = this.dateInputRef.current?.value ?? '';
     const imageFile = this.imageInputRef.current?.files?.[0];
-    const network = this.selectNetworkRef.current?.value ?? '';
-    const mainnet = this.mainnetRef.find((ref) => ref.current?.checked)?.current?.value ?? '';
-    const agreement = this.agreementRef.current?.checked ?? false;
-
     let imageSrc = '';
     if (imageFile) {
       imageSrc = URL.createObjectURL(imageFile);
     }
 
-    this.props.onAddProduct({
-      title,
-      price,
+    const product = {
+      title: this.titleInputRef.current?.value ?? '',
+      price: +(this.priceInputRef.current?.value ?? 0),
       imageSrc,
-      date,
-      network,
-      mainnet,
-      agreement,
-    });
-    console.log(title, date, imageSrc, mainnet);
+      date: this.dateInputRef.current?.value ?? '',
+      network: this.selectNetworkRef.current?.value ?? '',
+      mainnet: this.mainnetRef.find((ref) => ref.current?.checked)?.current?.value ?? '',
+      agreement: this.agreementRef.current?.checked ?? false,
+    };
+
+    const isFormValid = this.validate(product);
+
+    if (isFormValid) {
+      this.props.onAddProduct(product);
+    }
   };
 
   render() {
     return (
       <form className="form" onSubmit={this.handleSubmit}>
-        <FormInput type="text" label="Item Name" id="title" inputRef={this.titleInputRef} />
-        <FormInput type="number" label="Start Price" id="price" inputRef={this.priceInputRef} />
-        <FormInput type="date" label="End of sale date" id="date" inputRef={this.dateInputRef} />
+        <FormInput
+          type="text"
+          label="Item Name"
+          id="title"
+          inputRef={this.titleInputRef}
+          errorMessage={this.state.titleError}
+        />
+        <FormInput
+          type="number"
+          label="Start Price"
+          id="price"
+          inputRef={this.priceInputRef}
+          errorMessage={this.state.titleError}
+        />
+        <FormInput
+          type="date"
+          label="End of sale date"
+          id="date"
+          inputRef={this.dateInputRef}
+          errorMessage={this.state.titleError}
+        />
         <DropdownInput id="network" options={networks} inputRef={this.selectNetworkRef} />
         <AddImageButton inputRef={this.imageInputRef} />
         <RadioInput id="mainnet" options={mainnetSelector} inputRefs={this.mainnetRef} />
