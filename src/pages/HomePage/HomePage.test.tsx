@@ -2,10 +2,10 @@ import { test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import React from 'react';
-import Home from './Home';
+import HomePage from './HomePage';
 
 test('Cards list renders correctly', () => {
-  render(<Home />);
+  render(<HomePage />);
 
   const cards = screen.getAllByTestId('card');
   expect(cards).toHaveLength(8);
