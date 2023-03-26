@@ -20,6 +20,7 @@ interface FormState {
   imageError: string;
   mainnetError: string;
   agreementError: string;
+  submitMessage: string;
 }
 
 class Form extends React.Component<FormProps, FormState> {
@@ -48,6 +49,7 @@ class Form extends React.Component<FormProps, FormState> {
       imageError: '',
       mainnetError: '',
       agreementError: '',
+      submitMessage: '',
     };
   }
 
@@ -60,6 +62,7 @@ class Form extends React.Component<FormProps, FormState> {
       imageError: '',
       mainnetError: '',
       agreementError: '',
+      submitMessage: '',
     };
 
     if (product.title.length < 3) newState.titleError = 'The length must be at least 3 characters!';
@@ -101,6 +104,11 @@ class Form extends React.Component<FormProps, FormState> {
 
     if (isFormValid) {
       this.props.onAddProduct(product);
+      e.currentTarget.reset();
+      this.setState({ submitMessage: 'Your NFT has been placed!' });
+      setTimeout(() => {
+        this.setState({ submitMessage: '' });
+      }, 2000);
     }
   };
 
@@ -149,7 +157,7 @@ class Form extends React.Component<FormProps, FormState> {
           errorMessage={this.state.agreementError}
         />
         <button type="submit" className="form__button">
-          Submit
+          {this.state.submitMessage || 'Submit'}
         </button>
       </form>
     );
