@@ -5,22 +5,12 @@ import DropdownInput from '../../components/DropdownInput/DropdownInput';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import RadioInput from '../../components/RadioInput/RadioInput';
 import { networks, mainnetSelector } from '../../fakeData';
-import { ProductData } from 'types';
+import { validateForm } from '../../utils/formValidation';
+import { ProductData, FormState } from 'types';
 import './Form.scss';
 
 interface FormProps {
   onAddProduct: (newProduct: ProductData) => void;
-}
-
-interface FormState {
-  titleError: string;
-  priceError: string;
-  dateError: string;
-  networkError: string;
-  imageError: string;
-  mainnetError: string;
-  agreementError: string;
-  submitMessage: string;
 }
 
 class Form extends React.Component<FormProps, FormState> {
@@ -53,34 +43,6 @@ class Form extends React.Component<FormProps, FormState> {
     };
   }
 
-  validate = (product: ProductData): boolean => {
-    const newState: FormState = {
-      titleError: '',
-      priceError: '',
-      dateError: '',
-      networkError: '',
-      imageError: '',
-      mainnetError: '',
-      agreementError: '',
-      submitMessage: '',
-    };
-
-    if (product.title.length < 3) newState.titleError = 'The length must be at least 3 characters!';
-    if (product.price < 1) newState.priceError = 'The price should be a positive number!';
-    if (new Date(product.date) < new Date() || !product.date)
-      newState.dateError = 'The sale cannot end before tomorrow!';
-    if (!product.network) newState.networkError = 'Please select a network!';
-    if (!product.imageSrc) newState.imageError = 'Please select an image!';
-    if (!product.mainnet) newState.mainnetError = 'Please select mainnet or testnet!';
-    if (!product.agreement) newState.agreementError = 'What about pineapples?';
-
-    this.setState(newState);
-    for (const value of Object.values(newState)) {
-      if (value) return false;
-    }
-    return true;
-  };
-
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -100,9 +62,10 @@ class Form extends React.Component<FormProps, FormState> {
       agreement: this.agreementRef.current?.checked ?? false,
     };
 
-    const isFormValid = this.validate(product);
+    const validationData = validateForm(product);
+    this.setState(validationData.newState);
 
-    if (isFormValid) {
+    if (validationData.isValid) {
       this.props.onAddProduct(product);
       e.currentTarget.reset();
       this.setState({ submitMessage: 'Your NFT has been placed!' });
