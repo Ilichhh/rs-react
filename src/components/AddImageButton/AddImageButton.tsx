@@ -4,11 +4,12 @@ import './AddImageButton.scss';
 
 interface AddImageButtonProps {
   inputRef: RefObject<HTMLInputElement>;
+  errorMessage: string;
 }
 
 class AddImageButton extends React.Component<AddImageButtonProps> {
   render() {
-    const { inputRef } = this.props;
+    const { inputRef, errorMessage } = this.props;
     return (
       <>
         <input
@@ -21,6 +22,7 @@ class AddImageButton extends React.Component<AddImageButtonProps> {
         <label className="form__button add-image" htmlFor="image">
           <span className="add-image__label">Add an image</span>
         </label>
+        {errorMessage && <span className="form-input__error">{errorMessage}</span>}
       </>
     );
   }

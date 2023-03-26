@@ -20,7 +20,7 @@ class FormInput extends Component<FormInputProps> {
             {label}
           </label>
         </div>
-        {errorMessage && <span className="form-input__error">Please enter a valid input</span>}
+        {errorMessage && <span className="form-input__error">{errorMessage}</span>}
       </>
     );
   }

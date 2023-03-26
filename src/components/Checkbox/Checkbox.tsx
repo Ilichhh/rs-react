@@ -6,22 +6,26 @@ interface CheckboxProps {
   id: string;
   inputRef: RefObject<HTMLInputElement>;
   defaultChecked: boolean;
+  errorMessage: string;
 }
 
 class Checkbox extends Component<CheckboxProps> {
   render() {
-    const { label, id, inputRef, defaultChecked } = this.props;
+    const { label, id, inputRef, defaultChecked, errorMessage } = this.props;
     return (
-      <div className="form-input__wrapper">
-        <input
-          type="checkbox"
-          className="checkbox"
-          id={id}
-          ref={inputRef}
-          defaultChecked={defaultChecked}
-        />
-        <label htmlFor={id}>{label}</label>
-      </div>
+      <>
+        <div className="form-input__wrapper">
+          <input
+            type="checkbox"
+            className="checkbox"
+            id={id}
+            ref={inputRef}
+            defaultChecked={defaultChecked}
+          />
+          <label htmlFor={id}>{label}</label>
+        </div>
+        {errorMessage && <span className="form-input__error">{errorMessage}</span>}
+      </>
     );
   }
 }

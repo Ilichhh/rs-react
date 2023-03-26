@@ -5,11 +5,12 @@ interface DropdownInputProps {
   id: string;
   options: string[];
   inputRef: RefObject<HTMLSelectElement>;
+  errorMessage: string;
 }
 
 class DropdownInput extends Component<DropdownInputProps> {
   render() {
-    const { id, options, inputRef } = this.props;
+    const { id, options, inputRef, errorMessage } = this.props;
 
     const dropdownOptions = [
       <option key="default" value="" hidden>
@@ -23,11 +24,14 @@ class DropdownInput extends Component<DropdownInputProps> {
     ];
 
     return (
-      <div className="form-input__wrapper">
-        <select className="form-input" id={id} ref={inputRef}>
-          {dropdownOptions}
-        </select>
-      </div>
+      <>
+        <div className="form-input__wrapper">
+          <select className="form-input" id={id} ref={inputRef}>
+            {dropdownOptions}
+          </select>
+        </div>
+        {errorMessage && <span className="form-input__error">{errorMessage}</span>}
+      </>
     );
   }
 }

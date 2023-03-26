@@ -5,11 +5,12 @@ interface RadioInputProps {
   id: string;
   options: string[];
   inputRefs: RefObject<HTMLInputElement>[];
+  errorMessage: string;
 }
 
 class RadioInput extends Component<RadioInputProps> {
   render() {
-    const { id, options, inputRefs } = this.props;
+    const { id, options, inputRefs, errorMessage } = this.props;
 
     const radioOptions = options.map((option: string, index) => (
       <label className="form-input__radio" key={option} htmlFor={`${id}-${option}`}>
@@ -25,7 +26,12 @@ class RadioInput extends Component<RadioInputProps> {
       </label>
     ));
 
-    return <div className="form-input__wrapper">{radioOptions}</div>;
+    return (
+      <>
+        <div className="form-input__wrapper">{radioOptions}</div>
+        {errorMessage && <span className="form-input__error">{errorMessage}</span>}
+      </>
+    );
   }
 }
 
