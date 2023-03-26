@@ -11,6 +11,7 @@ export default defineConfig({
   test: {
     coverage: {
       provider: 'istanbul',
+      include: ['src/**/*.ts', 'src/**/*.tsx', 'other/directory/**/*.js'],
     },
     globals: true,
     environment: 'jsdom',
