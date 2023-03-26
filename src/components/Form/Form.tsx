@@ -13,8 +13,9 @@ interface FormProps {
 }
 
 interface FormState {
-  isValid: boolean;
   titleError: string;
+  priceError: string;
+  dateError: string;
 }
 
 class Form extends React.Component<FormProps, FormState> {
@@ -36,17 +37,26 @@ class Form extends React.Component<FormProps, FormState> {
     this.mainnetRef = mainnetSelector.map(() => React.createRef());
     this.agreementRef = React.createRef();
     this.state = {
-      isValid: false,
       titleError: '',
+      priceError: '',
+      dateError: '',
     };
   }
 
   validate = (product: ProductData): boolean => {
-    if (!product.title) {
-      this.setState({ titleError: 'Please enter a valid input' });
-      return false;
+    const newState: FormState = {
+      titleError: '',
+      priceError: '',
+      dateError: '',
+    };
+
+    if (product.title.length < 3) newState.titleError = 'Please enter a valid input';
+    if (product.price < 1) newState.priceError = 'Please enter a valid input';
+
+    this.setState(newState);
+    for (const value of Object.values(newState)) {
+      if (value) return false;
     }
-    this.setState({ titleError: '' });
     return true;
   };
 
@@ -91,14 +101,14 @@ class Form extends React.Component<FormProps, FormState> {
           label="Start Price"
           id="price"
           inputRef={this.priceInputRef}
-          errorMessage={this.state.titleError}
+          errorMessage={this.state.priceError}
         />
         <FormInput
           type="date"
           label="End of sale date"
           id="date"
           inputRef={this.dateInputRef}
-          errorMessage={this.state.titleError}
+          errorMessage={this.state.dateError}
         />
         <DropdownInput id="network" options={networks} inputRef={this.selectNetworkRef} />
         <AddImageButton inputRef={this.imageInputRef} />
