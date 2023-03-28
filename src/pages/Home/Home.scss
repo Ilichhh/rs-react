@@ -1,0 +1,9 @@
+@import '../../styles/variables';
+
+.cards-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding-top: 40px;
+}

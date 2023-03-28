@@ -1,0 +1,28 @@
+@import './styles/variables';
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 40px;
+
+  border-bottom: 1px solid $secondary-color;
+
+  .container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 40px;
+  }
+
+  &__link {
+    text-decoration: none;
+    
+    color: $main-color;
+
+    transition: .3s all;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}

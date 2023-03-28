@@ -1,0 +1,41 @@
+@import '../../styles/variables';
+
+.search {
+  display: flex;
+  justify-content: center;
+  
+  &__input-wrapper {
+    position: relative;
+
+    height: 30px;
+    width: 500px;
+  }
+
+  &__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 30px;
+    width: 428px;
+    padding: 0 35px;
+
+    border: 1px solid $secondary-color;
+    background-color: $bg-color;
+    color: $main-color;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $main-color;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 7px;
+    left: -5px;
+    z-index: 1;
+
+    height: 20px;
+  }
+}
