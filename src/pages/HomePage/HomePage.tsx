@@ -4,15 +4,15 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import { data } from '../../fakeData';
 import './HomePage.scss';
 
-class HomePage extends React.Component {
-  handleSearch = (searchValue: string) => {
+function HomePage() {
+  const handleSearch = (searchValue: string) => {
     console.log(searchValue);
   };
 
-  render = () => (
+  return (
     <div className="home">
       <h1>Home page</h1>
-      <SearchBar onSearch={this.handleSearch} />
+      <SearchBar onSearch={handleSearch} />
       <div className="cards-wrapper">
         {data.map((item) => (
           <Card key={item.id} data={item} />

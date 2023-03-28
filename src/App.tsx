@@ -7,8 +7,8 @@ import HomePage from './pages/HomePage/HomePage';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import './App.scss';
 
-class App extends React.Component {
-  render = () => (
+function App() {
+  return (
     <>
       <header className="header">
         <div className="container">
