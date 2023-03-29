@@ -7,33 +7,31 @@ import HomePage from './pages/HomePage/HomePage';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import './App.scss';
 
-function App() {
-  return (
-    <>
-      <header className="header">
-        <div className="container">
-          <Link className="header__link" to="/">
-            Home
-          </Link>
-          <Link className="header__link" to="/form">
-            Form
-          </Link>
-          <Link className="header__link" to="/about">
-            About Us
-          </Link>
-        </div>
-      </header>
+const App = () => (
+  <>
+    <header className="header">
       <div className="container">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/form" element={<FormPage />} />
-          <Route path="/404" element={<ErrorPage />} />
-          <Route path="*" element={<Navigate to="/404" replace />} />
-        </Routes>
+        <Link className="header__link" to="/">
+          Home
+        </Link>
+        <Link className="header__link" to="/form">
+          Form
+        </Link>
+        <Link className="header__link" to="/about">
+          About Us
+        </Link>
       </div>
-    </>
-  );
-}
+    </header>
+    <div className="container">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/form" element={<FormPage />} />
+        <Route path="/404" element={<ErrorPage />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
+      </Routes>
+    </div>
+  </>
+);
 
 export default App;
