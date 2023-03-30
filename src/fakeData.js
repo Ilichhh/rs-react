@@ -64,3 +64,7 @@ export const data = [
     owner: '0xC69F5a006Cb3CCF102C9B14746e92cE68468D978',
   },
 ];
+
+export const networks = ['Ethereum', 'Polygon', 'Optimism', 'Arbitrum', 'BNB Chain'];
+
+export const mainnetSelector = ['mainnet', 'testnet'];

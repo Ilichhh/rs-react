@@ -1,7 +1,7 @@
 import React from 'react';
-import './Error.scss';
+import './ErrorPage.scss';
 
-class Error extends React.Component {
+class ErrorPage extends React.Component {
   render() {
     return (
       <div className="error-page">
@@ -12,4 +12,4 @@ class Error extends React.Component {
   }
 }
 
-export default Error;
+export default ErrorPage;

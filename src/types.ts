@@ -5,3 +5,28 @@ export interface CardData {
   lastPrice: number;
   owner: string;
 }
+
+export interface ProductData {
+  title: string;
+  price: number;
+  imageSrc: string;
+  date: string;
+  network: string;
+  mainnet: string;
+  agreement: boolean;
+}
+
+export interface Products {
+  products: ProductData[];
+}
+
+export interface FormState {
+  titleError: string;
+  priceError: string;
+  dateError: string;
+  networkError: string;
+  imageError: string;
+  mainnetError: string;
+  agreementError: string;
+  submitMessage: string;
+}

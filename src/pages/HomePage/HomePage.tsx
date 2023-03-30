@@ -2,9 +2,9 @@ import React from 'react';
 import Card from '../../components/Card/Card';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { data } from '../../fakeData';
-import './Home.scss';
+import './HomePage.scss';
 
-class Home extends React.Component {
+class HomePage extends React.Component {
   handleSearch = (searchValue: string) => {
     console.log(searchValue);
   };
@@ -22,4 +22,4 @@ class Home extends React.Component {
   );
 }
 
-export default Home;
+export default HomePage;
