@@ -1,4 +1,4 @@
-import React, { Component, RefObject } from 'react';
+import React, { RefObject } from 'react';
 import './DropdownInput.scss';
 
 interface DropdownInputProps {
@@ -8,32 +8,28 @@ interface DropdownInputProps {
   errorMessage: string;
 }
 
-class DropdownInput extends Component<DropdownInputProps> {
-  render() {
-    const { id, options, inputRef, errorMessage } = this.props;
+const DropdownInput = ({ id, options, inputRef, errorMessage }: DropdownInputProps) => {
+  const dropdownOptions = [
+    <option key="default" value="" hidden>
+      Select network
+    </option>,
+    ...options.map((option: string) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    )),
+  ];
 
-    const dropdownOptions = [
-      <option key="default" value="" hidden>
-        Select network
-      </option>,
-      ...options.map((option: string) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      )),
-    ];
-
-    return (
-      <>
-        <div className="form-input__wrapper">
-          <select className="form-input" id={id} ref={inputRef}>
-            {dropdownOptions}
-          </select>
-        </div>
-        {errorMessage && <span className="form-input__error">{errorMessage}</span>}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <div className="form-input__wrapper">
+        <select className="form-input" id={id} ref={inputRef}>
+          {dropdownOptions}
+        </select>
+      </div>
+      {errorMessage && <span className="form-input__error">{errorMessage}</span>}
+    </>
+  );
+};
 
 export default DropdownInput;
