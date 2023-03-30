@@ -1,4 +1,5 @@
-import React, { FormEvent, RefObject } from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { FormEvent, useRef, useState } from 'react';
 import FormInput from '../../components/FormInput/FormInput';
 import AddImageButton from '../../components/AddImageButton/AddImageButton';
 import DropdownInput from '../../components/DropdownInput/DropdownInput';
@@ -13,118 +14,106 @@ interface FormProps {
   onAddProduct: (newProduct: ProductData) => void;
 }
 
-class Form extends React.Component<FormProps, FormState> {
-  private titleInputRef: RefObject<HTMLInputElement>;
-  private priceInputRef: RefObject<HTMLInputElement>;
-  private dateInputRef: RefObject<HTMLInputElement>;
-  private imageInputRef: RefObject<HTMLInputElement>;
-  private selectNetworkRef: RefObject<HTMLSelectElement>;
-  private mainnetRef: RefObject<HTMLInputElement>[] = [];
-  private agreementRef: RefObject<HTMLInputElement>;
+function Form({ onAddProduct }: FormProps) {
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const priceInputRef = useRef<HTMLInputElement>(null);
+  const dateInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const selectNetworkRef = useRef<HTMLSelectElement>(null);
+  const mainnetRef = mainnetSelector.map(() => useRef<HTMLInputElement>(null));
+  const agreementRef = useRef<HTMLInputElement>(null);
 
-  constructor(props: FormProps) {
-    super(props);
-    this.titleInputRef = React.createRef();
-    this.priceInputRef = React.createRef();
-    this.dateInputRef = React.createRef();
-    this.imageInputRef = React.createRef();
-    this.selectNetworkRef = React.createRef();
-    this.mainnetRef = mainnetSelector.map(() => React.createRef());
-    this.agreementRef = React.createRef();
-    this.state = {
-      titleError: '',
-      priceError: '',
-      dateError: '',
-      networkError: '',
-      imageError: '',
-      mainnetError: '',
-      agreementError: '',
-      submitMessage: '',
-    };
-  }
+  const [state, setState] = useState<FormState>({
+    titleError: '',
+    priceError: '',
+    dateError: '',
+    networkError: '',
+    imageError: '',
+    mainnetError: '',
+    agreementError: '',
+    submitMessage: '',
+  });
 
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const imageFile = this.imageInputRef.current?.files?.[0];
+    const imageFile = imageInputRef.current?.files?.[0];
     let imageSrc = '';
     if (imageFile) {
       imageSrc = URL.createObjectURL(imageFile);
     }
 
     const product = {
-      title: this.titleInputRef.current?.value ?? '',
-      price: +(this.priceInputRef.current?.value ?? 0),
+      title: titleInputRef.current?.value ?? '',
+      price: +(priceInputRef.current?.value ?? 0),
       imageSrc,
-      date: this.dateInputRef.current?.value ?? '',
-      network: this.selectNetworkRef.current?.value ?? '',
-      mainnet: this.mainnetRef.find((ref) => ref.current?.checked)?.current?.value ?? '',
-      agreement: this.agreementRef.current?.checked ?? false,
+      date: dateInputRef.current?.value ?? '',
+      network: selectNetworkRef.current?.value ?? '',
+      mainnet: mainnetRef.find((ref) => ref.current?.checked)?.current?.value ?? '',
+      agreement: agreementRef.current?.checked ?? false,
     };
 
     const validationData = validateForm(product);
-    this.setState(validationData.newState);
+    setState(validationData.newState);
 
     if (validationData.isValid) {
-      this.props.onAddProduct(product);
+      onAddProduct(product);
       e.currentTarget.reset();
-      this.setState({ submitMessage: 'Your NFT has been placed!' });
+      setState((prevState) => ({ ...prevState, submitMessage: 'Your NFT has been placed!' }));
       setTimeout(() => {
-        this.setState({ submitMessage: '' });
+        setState((prevState) => ({ ...prevState, submitMessage: '' }));
       }, 2000);
     }
   };
 
-  render() {
-    return (
-      <form className="form" onSubmit={this.handleSubmit}>
-        <FormInput
-          type="text"
-          label="Item Name"
-          id="title"
-          inputRef={this.titleInputRef}
-          errorMessage={this.state.titleError}
-        />
-        <FormInput
-          type="number"
-          label="Start Price"
-          id="price"
-          inputRef={this.priceInputRef}
-          errorMessage={this.state.priceError}
-        />
-        <FormInput
-          type="date"
-          label="End of sale date"
-          id="date"
-          inputRef={this.dateInputRef}
-          errorMessage={this.state.dateError}
-        />
-        <DropdownInput
-          id="network"
-          options={networks}
-          inputRef={this.selectNetworkRef}
-          errorMessage={this.state.networkError}
-        />
-        <AddImageButton inputRef={this.imageInputRef} errorMessage={this.state.imageError} />
-        <RadioInput
-          id="mainnet"
-          options={mainnetSelector}
-          inputRefs={this.mainnetRef}
-          errorMessage={this.state.mainnetError}
-        />
-        <Checkbox
-          label="I agree to never, ever, ever put pineapple on pizza"
-          id="agreement"
-          inputRef={this.agreementRef}
-          defaultChecked={false}
-          errorMessage={this.state.agreementError}
-        />
-        <button type="submit" className="form__button">
-          {this.state.submitMessage || 'Submit'}
-        </button>
-      </form>
-    );
-  }
+  return (
+    <form className="form" onSubmit={handleSubmit}>
+      <FormInput
+        type="text"
+        label="Item Name"
+        id="title"
+        inputRef={titleInputRef}
+        errorMessage={state.titleError}
+      />
+      <FormInput
+        type="number"
+        label="Start Price"
+        id="price"
+        inputRef={priceInputRef}
+        errorMessage={state.priceError}
+      />
+      <FormInput
+        type="date"
+        label="End of sale date"
+        id="date"
+        inputRef={dateInputRef}
+        errorMessage={state.dateError}
+      />
+      <DropdownInput
+        id="network"
+        options={networks}
+        inputRef={selectNetworkRef}
+        errorMessage={state.networkError}
+      />
+      <AddImageButton inputRef={imageInputRef} errorMessage={state.imageError} />
+      <RadioInput
+        id="mainnet"
+        options={mainnetSelector}
+        inputRefs={mainnetRef}
+        errorMessage={state.mainnetError}
+      />
+      <Checkbox
+        label="I agree to never, ever, ever put pineapple on pizza"
+        id="agreement"
+        inputRef={agreementRef}
+        defaultChecked={false}
+        errorMessage={state.agreementError}
+      />
+      <button type="submit" className="form__button">
+        {state.submitMessage || 'Submit'}
+      </button>
+    </form>
+  );
 }
 
 export default Form;
