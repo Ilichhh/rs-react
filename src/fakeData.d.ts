@@ -11,3 +11,5 @@ export const data: CardProps[];
 export const networks: string[];
 
 export const mainnetSelector: string[];
+
+export const formOptions: RegisterOptions<FieldValues> | undefined;

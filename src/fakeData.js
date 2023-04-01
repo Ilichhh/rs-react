@@ -68,3 +68,10 @@ export const data = [
 export const networks = ['Ethereum', 'Polygon', 'Optimism', 'Arbitrum', 'BNB Chain'];
 
 export const mainnetSelector = ['mainnet', 'testnet'];
+
+export const formOptions = {
+  title: {
+    required: "Please enter item's name",
+    minLength: { value: 3, message: 'The length must be at least 3 characters!' },
+  },
+};

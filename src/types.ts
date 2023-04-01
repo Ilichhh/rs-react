@@ -19,14 +19,3 @@ export interface ProductData {
 export interface Products {
   products: ProductData[];
 }
-
-export interface FormState {
-  titleError: string;
-  priceError: string;
-  dateError: string;
-  networkError: string;
-  imageError: string;
-  mainnetError: string;
-  agreementError: string;
-  submitMessage: string;
-}
