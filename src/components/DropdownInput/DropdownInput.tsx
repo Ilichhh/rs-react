@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
-import { formOptions } from '../../fakeData';
+import { registerOptions } from '../../fakeData';
 import './DropdownInput.scss';
 
 interface DropdownInputProps {
@@ -25,7 +25,7 @@ const DropdownInput = ({ id, options, register, error }: DropdownInputProps) => 
   return (
     <>
       <div className="form-input__wrapper">
-        <select className="form-input" id={id} {...register(id, formOptions[id])}>
+        <select className="form-input" id={id} {...register(id, registerOptions[id])}>
           {dropdownOptions}
         </select>
       </div>

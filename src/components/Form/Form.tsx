@@ -1,13 +1,11 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import FormInput from '../../components/FormInput/FormInput';
 import AddImageButton from '../../components/AddImageButton/AddImageButton';
 import DropdownInput from '../../components/DropdownInput/DropdownInput';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import RadioInput from '../../components/RadioInput/RadioInput';
-import { networks, mainnetSelector, formOptions } from '../../fakeData';
-import { validateForm } from '../../utils/formValidation';
+import { networks, mainnetSelector } from '../../fakeData';
 import { ProductData } from 'types';
 import './Form.scss';
 import '../FormInput/FormInput.scss';
@@ -17,27 +15,6 @@ interface FormProps {
 }
 
 function Form({ onAddProduct }: FormProps) {
-  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   const imageFile = imageInputRef.current?.files?.[0];
-  //   let imageSrc = '';
-  //   if (imageFile) {
-  //     imageSrc = URL.createObjectURL(imageFile);
-  //   }
-
-  //   const validationData = validateForm(product);
-  //   setState(validationData.newState);
-
-  //   if (validationData.isValid) {
-  //     onAddProduct(product);
-  //     e.currentTarget.reset();
-  //     setState((prevState) => ({ ...prevState, submitMessage: 'Your NFT has been placed!' }));
-  //     setTimeout(() => {
-  //       setState((prevState) => ({ ...prevState, submitMessage: '' }));
-  //     }, 2000);
-  //   }
-  // };
   const {
     register,
     handleSubmit,
@@ -46,12 +23,32 @@ function Form({ onAddProduct }: FormProps) {
     clearErrors,
   } = useForm();
 
-  const onSubmit: SubmitHandler<object> = (data) => {
+  const [buttonText, setButtonText] = useState('Submit');
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const isValid = !Object.keys(errors).length;
+    const imageFile = data.image?.[0];
+    let imageSrc = '';
+    if (imageFile) {
+      imageSrc = URL.createObjectURL(imageFile);
+    }
+
     if (isValid) {
       reset();
       clearErrors();
-      console.log(data);
+      onAddProduct({
+        title: data.title,
+        price: data.price,
+        imageSrc: imageSrc,
+        date: data.date,
+        network: data.network,
+        mainnet: data.mainnet,
+        agreement: data.agreement,
+      });
+      setButtonText('Your NFT has been placed!');
+      setTimeout(() => {
+        setButtonText('Submit');
+      }, 2000);
     }
   };
 
@@ -99,7 +96,7 @@ function Form({ onAddProduct }: FormProps) {
         error={errors.agreement?.message}
       />
       <button type="submit" className="form__button">
-        Submit
+        {buttonText}
       </button>
     </form>
   );

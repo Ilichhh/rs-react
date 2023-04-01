@@ -69,7 +69,7 @@ export const networks = ['Ethereum', 'Polygon', 'Optimism', 'Arbitrum', 'BNB Cha
 
 export const mainnetSelector = ['mainnet', 'testnet'];
 
-export const formOptions = {
+export const registerOptions = {
   title: {
     required: "Please enter item's name",
     minLength: { value: 3, message: 'The length must be at least 3 characters!' },
@@ -79,8 +79,8 @@ export const formOptions = {
     min: { value: 1, message: 'The price should be a positive number!' },
   },
   date: {
-    required: 'Please enter sale ends date',
-    // minLength: { value: 3, message: 'The sale cannot end before tomorrow!' },
+    required: 'Please enter the end date of the sale',
+    validate: (value) => new Date(value) > new Date() || 'The sale cannot end before tomorrow!',
   },
   network: {
     required: 'Please select a network!',

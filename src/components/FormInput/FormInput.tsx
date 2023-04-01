@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
-import { formOptions } from '../../fakeData';
+import { registerOptions } from '../../fakeData';
 import './FormInput.scss';
 
 interface FormInputProps {
@@ -19,7 +19,7 @@ const FormInput = ({ type, label, id, register, error }: FormInputProps) => (
         className="form-input"
         id={id}
         placeholder=" "
-        {...register(id, formOptions[id])}
+        {...register(id, registerOptions[id])}
       />
       <label htmlFor={id} className="form-input__label">
         {label}

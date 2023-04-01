@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
-import { formOptions } from '../../fakeData';
+import { registerOptions } from '../../fakeData';
 import './Checkbox.scss';
 
 interface CheckboxProps {
@@ -19,7 +19,7 @@ const Checkbox = ({ label, id, register, defaultChecked, error }: CheckboxProps)
         className="checkbox"
         id={id}
         defaultChecked={defaultChecked}
-        {...register(id, formOptions[id])}
+        {...register(id, registerOptions[id])}
       />
       <label htmlFor={id}>{label}</label>
     </div>

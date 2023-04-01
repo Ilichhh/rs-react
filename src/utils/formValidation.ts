@@ -1,10 +1,9 @@
-import { ProductData, FormState } from 'types';
+import { ProductData } from 'types';
 
 export const validateForm = (
   product: ProductData
 ): {
   isValid: boolean;
-  newState: FormState;
 } => {
   const newState = {
     titleError: '',

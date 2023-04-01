@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
-import { formOptions } from '../../fakeData';
+import { registerOptions } from '../../fakeData';
 import '../../components/Form/Form.scss';
 import './AddImageButton.scss';
 
@@ -17,7 +17,7 @@ const AddImageButton = ({ id, register, error }: AddImageButtonProps) => (
       type="file"
       accept=".jpg, .jpeg, .png"
       id="image"
-      {...register(id, formOptions[id])}
+      {...register(id, registerOptions[id])}
     />
     <label className="form__button add-image" htmlFor="image">
       <span className="add-image__label">Add an image</span>

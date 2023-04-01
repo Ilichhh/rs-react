@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
-import { formOptions } from '../../fakeData';
+import { registerOptions } from '../../fakeData';
 import './RadioInput.scss';
 
 interface RadioInputProps {
@@ -17,7 +17,7 @@ const RadioInput = ({ id, options, register, error }: RadioInputProps) => {
         type="radio"
         id={`${id}-${option}`}
         value={option}
-        {...register(id, formOptions[id])}
+        {...register(id, registerOptions[id])}
       />
       {option}
       <span className="form-input__radio-checkmark"></span>
