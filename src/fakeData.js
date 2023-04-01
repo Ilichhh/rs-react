@@ -74,4 +74,24 @@ export const formOptions = {
     required: "Please enter item's name",
     minLength: { value: 3, message: 'The length must be at least 3 characters!' },
   },
+  price: {
+    required: "Please enter item's price",
+    min: { value: 1, message: 'The price should be a positive number!' },
+  },
+  date: {
+    required: 'Please enter sale ends date',
+    // minLength: { value: 3, message: 'The sale cannot end before tomorrow!' },
+  },
+  network: {
+    required: 'Please select a network!',
+  },
+  mainnet: {
+    required: 'Please select mainnet or testnet!',
+  },
+  agreement: {
+    required: 'What about pineapples?',
+  },
+  image: {
+    required: 'Please select an image!',
+  },
 };

@@ -1,14 +1,16 @@
-import React, { RefObject } from 'react';
+import React from 'react';
+import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import { formOptions } from '../../fakeData';
 import './DropdownInput.scss';
 
 interface DropdownInputProps {
   id: string;
   options: string[];
-  inputRef: RefObject<HTMLSelectElement>;
-  errorMessage: string;
+  register: UseFormRegister<FieldValues>;
+  error: string | FieldError | Merge<FieldError, FieldErrorsImpl<FieldValues>> | undefined;
 }
 
-const DropdownInput = ({ id, options, inputRef, errorMessage }: DropdownInputProps) => {
+const DropdownInput = ({ id, options, register, error }: DropdownInputProps) => {
   const dropdownOptions = [
     <option key="default" value="" hidden>
       Select network
@@ -23,11 +25,11 @@ const DropdownInput = ({ id, options, inputRef, errorMessage }: DropdownInputPro
   return (
     <>
       <div className="form-input__wrapper">
-        <select className="form-input" id={id} ref={inputRef}>
+        <select className="form-input" id={id} {...register(id, formOptions[id])}>
           {dropdownOptions}
         </select>
       </div>
-      {errorMessage && <span className="form-input__error">{errorMessage}</span>}
+      {error && <span className="form-input__error">{error.toString()}</span>}
     </>
   );
 };

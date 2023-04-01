@@ -1,7 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { formOptions } from '../../fakeData';
-import { ProductData } from 'types';
 import './FormInput.scss';
 
 interface FormInputProps {

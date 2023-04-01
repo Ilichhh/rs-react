@@ -64,40 +64,40 @@ function Form({ onAddProduct }: FormProps) {
         register={register}
         error={errors.title?.message}
       />
-      {/* <FormInput
+      <FormInput
         type="number"
         label="Start Price"
         id="price"
-        inputRef={priceInputRef}
-        errorMessage={state.priceError}
+        register={register}
+        error={errors.price?.message}
       />
       <FormInput
         type="date"
         label="End of sale date"
         id="date"
-        inputRef={dateInputRef}
-        errorMessage={state.dateError}
+        register={register}
+        error={errors.date?.message}
       />
       <DropdownInput
         id="network"
         options={networks}
-        inputRef={selectNetworkRef}
-        errorMessage={state.networkError}
+        register={register}
+        error={errors.network?.message}
       />
-      <AddImageButton inputRef={imageInputRef} errorMessage={state.imageError} />
+      <AddImageButton id="image" register={register} error={errors.image?.message} />
       <RadioInput
         id="mainnet"
         options={mainnetSelector}
-        inputRefs={mainnetRef}
-        errorMessage={state.mainnetError}
+        register={register}
+        error={errors.mainnet?.message}
       />
       <Checkbox
         label="I agree to never, ever, ever put pineapple on pizza"
         id="agreement"
-        inputRef={agreementRef}
         defaultChecked={false}
-        errorMessage={state.agreementError}
-      /> */}
+        register={register}
+        error={errors.agreement?.message}
+      />
       <button type="submit" className="form__button">
         Submit
       </button>
