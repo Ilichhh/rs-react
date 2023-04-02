@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import Form from '../../components/Form/Form';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import { ProductData, Products } from 'types';
+import { ProductData } from 'types';
 import './FormPage.scss';
 
 function FormPage() {
-  const [productsList, setProductsList] = useState<Products>({ products: [] });
+  const [productsList, setProductsList] = useState<ProductData[]>([]);
 
   const handleAddProduct = (newProduct: ProductData) => {
-    setProductsList((prevState) => ({
-      products: [...prevState.products, newProduct],
-    }));
+    setProductsList((prevState) => [...prevState, newProduct]);
   };
 
   return (
@@ -20,7 +18,7 @@ function FormPage() {
         <Form onAddProduct={handleAddProduct} />
       </div>
       <div className="cards-wrapper">
-        {productsList.products.map((item, index) => (
+        {productsList.map((item, index) => (
           <ProductCard key={index} data={item} />
         ))}
       </div>

@@ -5,7 +5,7 @@ import AddImageButton from '../../components/AddImageButton/AddImageButton';
 import DropdownInput from '../../components/DropdownInput/DropdownInput';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import RadioInput from '../../components/RadioInput/RadioInput';
-import { networks, mainnetSelector } from '../../fakeData';
+import { networks, mainnetSelector } from '../../data';
 import { ProductData } from 'types';
 import './Form.scss';
 import '../FormInput/FormInput.scss';
@@ -39,7 +39,7 @@ function Form({ onAddProduct }: FormProps) {
       onAddProduct({
         title: data.title,
         price: data.price,
-        imageSrc: imageSrc,
+        imageSrc,
         date: data.date,
         network: data.network,
         mainnet: data.mainnet,

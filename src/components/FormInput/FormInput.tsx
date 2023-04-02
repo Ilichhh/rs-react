@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
-import { registerOptions } from '../../fakeData';
+import { registerOptions } from '../../data';
 import './FormInput.scss';
 
 interface FormInputProps {

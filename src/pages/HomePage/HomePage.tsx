@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../../components/Card/Card';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { data } from '../../fakeData';
+import { data } from '../../data';
 import './HomePage.scss';
 
 function HomePage() {
