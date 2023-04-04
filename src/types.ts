@@ -1,9 +1,8 @@
-export interface CardData {
+export interface CardPreviewData {
   id: number;
-  imageSrc: string;
-  price: number;
-  lastPrice: number;
-  owner: string;
+  name: string;
+  status: string;
+  image: string;
 }
 
 export interface FormInputs {
