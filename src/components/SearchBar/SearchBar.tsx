@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SearchIcon } from '../../assets/icons';
 import './SearchBar.scss';
 
@@ -6,38 +6,29 @@ interface SearchBarProps {
   onSearch: (searchValue: string) => void;
 }
 
-interface SearchBarState {
-  value: string;
-}
+function SearchBar(props: SearchBarProps) {
+  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
 
-class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
-  constructor(props: SearchBarProps) {
-    super(props);
-    this.state = {
-      value: localStorage.getItem('searchValue') || '',
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      localStorage.setItem('searchValue', searchValue);
     };
-  }
 
-  componentDidMount() {
-    window.addEventListener('beforeunload', this.handleBeforeUnload);
-  }
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
-  componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.handleBeforeUnload);
-    localStorage.setItem('searchValue', this.state.value);
-  }
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      localStorage.setItem('searchValue', searchValue);
+    };
+  }, [searchValue]);
 
-  handleBeforeUnload = () => {
-    localStorage.setItem('searchValue', this.state.value);
-  };
-
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    this.setState({ value });
-    this.props.onSearch(value);
+    setSearchValue(value);
+    props.onSearch(value);
   };
 
-  render = () => (
+  return (
     <div className="search">
       <div className="search__input-wrapper">
         <SearchIcon />
@@ -45,8 +36,8 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
           type="text"
           placeholder="Search..."
           className="search__input"
-          value={this.state.value}
-          onChange={this.handleInputChange}
+          value={searchValue}
+          onChange={handleInputChange}
         />
       </div>
     </div>

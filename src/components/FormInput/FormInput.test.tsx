@@ -1,26 +1,33 @@
-import { test } from 'vitest';
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import React, { createRef } from 'react';
+import { suite, test, vi } from 'vitest';
+import { UseFormRegister, FieldValues } from 'react-hook-form';
 import FormInput from './FormInput';
 
-test('Renders label and input element with correct props', () => {
+suite('FormInput', () => {
   const label = 'Item Name';
   const id = 'title';
-  const inputRef = createRef<HTMLInputElement>();
-  render(<FormInput type="email" label={label} id={id} inputRef={inputRef} errorMessage="" />);
-  expect(screen.getByLabelText(label)).toBeInTheDocument();
-});
+  const type = 'text';
+  const register = vi.fn() as UseFormRegister<FieldValues>;
 
-test('Renders error message when provided', () => {
-  const errorMessage = 'The length must be at least 3 characters!';
-  render(
-    <FormInput
-      type="text"
-      label="Item Name"
-      id="title"
-      inputRef={createRef()}
-      errorMessage={errorMessage}
-    />
-  );
-  expect(screen.getByText(errorMessage)).toBeInTheDocument();
+  test('renders input with label', () => {
+    const error = undefined;
+    render(<FormInput label={label} id={id} type={type} register={register} error={error} />);
+
+    const input = screen.getByLabelText(label);
+    const inputLabel = screen.getByText(label);
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute('type', type);
+    expect(input).toHaveAttribute('id', id);
+    expect(input).toHaveAttribute('placeholder', ' ');
+    expect(inputLabel).toBeInTheDocument();
+  });
+
+  test('renders error message', () => {
+    const error = 'This field is required';
+    render(<FormInput label={label} id={id} type={type} register={register} error={error} />);
+
+    const errorMessage = screen.getByText(error);
+    expect(errorMessage).toBeInTheDocument();
+  });
 });

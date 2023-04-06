@@ -1,29 +1,32 @@
-import React, { Component, RefObject } from 'react';
+import React from 'react';
+import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import { registerOptions } from '../../data';
 import './FormInput.scss';
 
 interface FormInputProps {
   type: string;
   label: string;
   id: string;
-  inputRef: RefObject<HTMLInputElement>;
-  errorMessage: string;
+  register: UseFormRegister<FieldValues>;
+  error: string | FieldError | Merge<FieldError, FieldErrorsImpl<FieldValues>> | undefined;
 }
 
-class FormInput extends Component<FormInputProps> {
-  render() {
-    const { type, label, id, inputRef, errorMessage } = this.props;
-    return (
-      <>
-        <div className="form-input__wrapper">
-          <input type={type} className="form-input" id={id} placeholder=" " ref={inputRef} />
-          <label htmlFor={id} className="form-input__label">
-            {label}
-          </label>
-        </div>
-        {errorMessage && <span className="form-input__error">{errorMessage}</span>}
-      </>
-    );
-  }
-}
+const FormInput = ({ type, label, id, register, error }: FormInputProps) => (
+  <>
+    <div className="form-input__wrapper">
+      <input
+        type={type}
+        className="form-input"
+        id={id}
+        placeholder=" "
+        {...register(id, registerOptions[id])}
+      />
+      <label htmlFor={id} className="form-input__label">
+        {label}
+      </label>
+    </div>
+    {error && <span className="form-input__error">{error.toString()}</span>}
+  </>
+);
 
 export default FormInput;

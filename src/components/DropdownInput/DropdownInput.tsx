@@ -1,39 +1,37 @@
-import React, { Component, RefObject } from 'react';
+import React from 'react';
+import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import { registerOptions } from '../../data';
 import './DropdownInput.scss';
 
 interface DropdownInputProps {
   id: string;
   options: string[];
-  inputRef: RefObject<HTMLSelectElement>;
-  errorMessage: string;
+  register: UseFormRegister<FieldValues>;
+  error: string | FieldError | Merge<FieldError, FieldErrorsImpl<FieldValues>> | undefined;
 }
 
-class DropdownInput extends Component<DropdownInputProps> {
-  render() {
-    const { id, options, inputRef, errorMessage } = this.props;
+const DropdownInput = ({ id, options, register, error }: DropdownInputProps) => {
+  const dropdownOptions = [
+    <option key="default" value="" hidden>
+      Select network
+    </option>,
+    ...options.map((option: string) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    )),
+  ];
 
-    const dropdownOptions = [
-      <option key="default" value="" hidden>
-        Select network
-      </option>,
-      ...options.map((option: string) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      )),
-    ];
-
-    return (
-      <>
-        <div className="form-input__wrapper">
-          <select className="form-input" id={id} ref={inputRef}>
-            {dropdownOptions}
-          </select>
-        </div>
-        {errorMessage && <span className="form-input__error">{errorMessage}</span>}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <div className="form-input__wrapper">
+        <select className="form-input" id={id} {...register(id, registerOptions[id])}>
+          {dropdownOptions}
+        </select>
+      </div>
+      {error && <span className="form-input__error">{error.toString()}</span>}
+    </>
+  );
+};
 
 export default DropdownInput;

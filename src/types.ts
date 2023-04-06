@@ -6,6 +6,16 @@ export interface CardData {
   owner: string;
 }
 
+export interface FormInputs {
+  title: string;
+  price: number;
+  image: FileList | undefined;
+  date: string;
+  network: string;
+  mainnet: string;
+  agreement: boolean;
+}
+
 export interface ProductData {
   title: string;
   price: number;
@@ -18,15 +28,4 @@ export interface ProductData {
 
 export interface Products {
   products: ProductData[];
-}
-
-export interface FormState {
-  titleError: string;
-  priceError: string;
-  dateError: string;
-  networkError: string;
-  imageError: string;
-  mainnetError: string;
-  agreementError: string;
-  submitMessage: string;
 }

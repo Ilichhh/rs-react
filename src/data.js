@@ -68,3 +68,30 @@ export const data = [
 export const networks = ['Ethereum', 'Polygon', 'Optimism', 'Arbitrum', 'BNB Chain'];
 
 export const mainnetSelector = ['mainnet', 'testnet'];
+
+export const registerOptions = {
+  title: {
+    required: "Please enter item's name",
+    minLength: { value: 3, message: 'The length must be at least 3 characters!' },
+  },
+  price: {
+    required: "Please enter item's price",
+    min: { value: 1, message: 'The price should be a positive number!' },
+  },
+  date: {
+    required: 'Please enter the end date of the sale',
+    validate: (value) => new Date(value) > new Date() || 'The sale cannot end before tomorrow!',
+  },
+  network: {
+    required: 'Please select a network!',
+  },
+  mainnet: {
+    required: 'Please select mainnet or testnet!',
+  },
+  agreement: {
+    required: 'What about pineapples?',
+  },
+  image: {
+    required: 'Please select an image!',
+  },
+};

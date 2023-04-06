@@ -1,33 +1,30 @@
-import React, { Component, RefObject } from 'react';
+import React from 'react';
+import { UseFormRegister, FieldValues, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import { registerOptions } from '../../data';
 import './Checkbox.scss';
 
 interface CheckboxProps {
   label: string;
   id: string;
-  inputRef: RefObject<HTMLInputElement>;
   defaultChecked: boolean;
-  errorMessage: string;
+  register: UseFormRegister<FieldValues>;
+  error: string | FieldError | Merge<FieldError, FieldErrorsImpl<FieldValues>> | undefined;
 }
 
-class Checkbox extends Component<CheckboxProps> {
-  render() {
-    const { label, id, inputRef, defaultChecked, errorMessage } = this.props;
-    return (
-      <>
-        <div className="form-input__wrapper">
-          <input
-            type="checkbox"
-            className="checkbox"
-            id={id}
-            ref={inputRef}
-            defaultChecked={defaultChecked}
-          />
-          <label htmlFor={id}>{label}</label>
-        </div>
-        {errorMessage && <span className="form-input__error">{errorMessage}</span>}
-      </>
-    );
-  }
-}
+const Checkbox = ({ label, id, register, defaultChecked, error }: CheckboxProps) => (
+  <>
+    <div className="form-input__wrapper">
+      <input
+        type="checkbox"
+        className="checkbox"
+        id={id}
+        defaultChecked={defaultChecked}
+        {...register(id, registerOptions[id])}
+      />
+      <label htmlFor={id}>{label}</label>
+    </div>
+    {error && <span className="form-input__error">{error.toString()}</span>}
+  </>
+);
 
 export default Checkbox;
