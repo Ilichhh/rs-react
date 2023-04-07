@@ -5,6 +5,14 @@ export interface CardPreviewData {
   image: string;
 }
 
+export interface CardFullData {
+  id: number;
+  name: string;
+  status: string;
+  image: string;
+  species: string;
+}
+
 export interface FormInputs {
   title: string;
   price: number;

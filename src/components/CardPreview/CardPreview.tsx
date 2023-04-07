@@ -4,13 +4,15 @@ import type { CardPreviewData } from 'types';
 
 interface CardProps {
   data: CardPreviewData;
+  openModal: (id: number) => void;
 }
 
 function Card(props: CardProps) {
-  const { name, status, image } = props.data;
+  const { name, status, image, id } = props.data;
+  const handleClick = () => props.openModal(id);
 
   return (
-    <div className="card-preview" data-testid="card">
+    <div className="card-preview" data-testid="card" onClick={handleClick}>
       <img src={image} alt="Card preview" className="card-preview__image" />
       <div className="card-preview__description">
         <div className="card-preview__name">{name}</div>
