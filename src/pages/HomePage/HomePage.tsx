@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Card from '../../components/CardPreview/CardPreview';
+import CardPreview from '../../components/CardPreview/CardPreview';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { getCharacters } from '../../api/api';
 import { CardPreviewData } from 'types';
-import './HomePage.scss';
-import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/Loader/Loader';
+import './HomePage.scss';
 
 function HomePage() {
   const [cards, setCards] = useState<CardPreviewData[] | null>(null);
-  const [charId, setCharId] = useState<number | null>(null);
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
 
   useEffect(() => {
@@ -22,9 +20,6 @@ function HomePage() {
     setCardsData();
   }, [searchValue]);
 
-  const openModal = (id: number) => setCharId(id);
-  const closeModal = () => setCharId(null);
-
   return (
     <>
       <div className="home">
@@ -33,14 +28,13 @@ function HomePage() {
         {cards ? (
           <div className="cards-wrapper">
             {cards.map((item) => (
-              <Card key={item.id} data={item} openModal={openModal} />
+              <CardPreview key={item.id} data={item} />
             ))}
           </div>
         ) : (
           <Loader />
         )}
       </div>
-      {charId && <Modal id={charId} closeModal={closeModal} />}
     </>
   );
 }

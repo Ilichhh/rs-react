@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ModalContext } from '../../context/ModalContext';
+import Character from '../../components/Character/Character';
 import './CardPreview.scss';
 import type { CardPreviewData } from 'types';
 
-interface CardProps {
+interface CardPreviewProps {
   data: CardPreviewData;
-  openModal: (id: number) => void;
 }
 
-function Card(props: CardProps) {
+function CardPreview(props: CardPreviewProps) {
   const { name, status, image, id } = props.data;
-  const handleClick = () => props.openModal(id);
+  const { openModal } = useContext(ModalContext);
+
+  const handleClick = () => openModal(<Character id={id} />);
 
   return (
     <div className="card-preview" data-testid="card" onClick={handleClick}>
@@ -22,4 +25,4 @@ function Card(props: CardProps) {
   );
 }
 
-export default Card;
+export default CardPreview;
