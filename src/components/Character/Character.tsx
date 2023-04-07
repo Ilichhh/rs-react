@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getSingleCharacter } from '../../api/api';
-import Loader from '../Loader/Loader';
+import StatusMessage from '../StatusMessage/StatusMessage';
 import type { CardFullData } from 'types';
 import './Character.scss';
 
@@ -10,18 +10,19 @@ interface ModalProps {
 
 function Character({ id }: ModalProps) {
   const [charData, setCharData] = useState<CardFullData | null>(null);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const setChar = async () => {
+      setIsError(false);
       const data = await getSingleCharacter(id);
-      if (data) {
-        setCharData(data);
-      }
+      data ? setCharData(data) : setIsError(true);
     };
     setChar();
   }, [id]);
 
-  if (!charData) return <Loader />;
+  if (isError) return <StatusMessage status="error" />;
+  if (!charData) return <StatusMessage status="loading" />;
 
   const { image, name, status, species, type, gender } = charData;
 
