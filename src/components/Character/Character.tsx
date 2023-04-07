@@ -23,15 +23,19 @@ function Character({ id }: ModalProps) {
 
   if (!charData) return <Loader />;
 
+  const { image, name, status, species, type, gender } = charData;
+
   return (
-    <>
-      <img src={charData.image} alt="Card preview" className="card-preview__image" />
-      <div className="card-preview__description">
-        <div className="card-preview__name">{charData.name}</div>
-        <div className="card-preview__status">{charData.status}</div>
-        <div className="card-preview__status">{charData.species}</div>
+    <div className="character">
+      <img src={image} alt="Card preview" className="character__image" />
+      <div className="character__description">
+        <div className="character__name">{name}</div>
+        <div className="character__param">Status: {status}</div>
+        <div className="character__param">Species: {species}</div>
+        <div className="character__param">Type: {type}</div>
+        <div className="character__param">Gender: {gender}</div>
       </div>
-    </>
+    </div>
   );
 }
 

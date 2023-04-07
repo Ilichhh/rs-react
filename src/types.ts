@@ -11,6 +11,8 @@ export interface CardFullData {
   status: string;
   image: string;
   species: string;
+  type: string;
+  gender: string;
 }
 
 export interface FormInputs {
