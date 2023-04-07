@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Loader.scss';
 
 function Loader() {
-  return <div className="loading">Loading</div>;
+  const [dots, setDots] = useState('');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prevDots) => (prevDots.length >= 3 ? '' : prevDots + '.'));
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return <div className="loader">Loading{dots}</div>;
 }
 
 export default Loader;
