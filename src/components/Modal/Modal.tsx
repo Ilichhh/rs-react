@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getSingleCharacter } from '../../api/api';
-import './Modal.scss';
+import Loader from '../../components/Loader/Loader';
 import type { CardFullData } from 'types';
+import './Modal.scss';
 
 interface ModalProps {
   id: number;
@@ -24,7 +25,7 @@ function Modal({ id, closeModal }: ModalProps) {
   return (
     <div className="modal__background" onClick={closeModal}>
       <div className="modal">
-        {charData && (
+        {charData ? (
           <>
             <img src={charData.image} alt="Card preview" className="card-preview__image" />
             <div className="card-preview__description">
@@ -33,6 +34,8 @@ function Modal({ id, closeModal }: ModalProps) {
               <div className="card-preview__status">{charData.species}</div>
             </div>
           </>
+        ) : (
+          <Loader />
         )}
       </div>
     </div>

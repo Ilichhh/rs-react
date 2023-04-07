@@ -5,6 +5,7 @@ import { getCharacters } from '../../api/api';
 import { CardPreviewData } from 'types';
 import './HomePage.scss';
 import Modal from '../../components/Modal/Modal';
+import Loader from '../../components/Loader/Loader';
 
 function HomePage() {
   const [cards, setCards] = useState<CardPreviewData[] | null>(null);
@@ -36,7 +37,7 @@ function HomePage() {
             ))}
           </div>
         ) : (
-          <div className="loading">Loading</div>
+          <Loader />
         )}
       </div>
       {charId && <Modal id={charId} closeModal={closeModal} />}
