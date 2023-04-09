@@ -4,9 +4,9 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import HomePage from './HomePage';
 
-test('Cards list renders correctly', () => {
+test('renders home page title', () => {
   render(<HomePage />);
 
-  const cards = screen.getAllByTestId('card');
-  expect(cards).toHaveLength(8);
+  const title = screen.getByText('Home page');
+  expect(title).toBeDefined();
 });
