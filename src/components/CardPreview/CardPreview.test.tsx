@@ -5,29 +5,21 @@ import React from 'react';
 import Card from './CardPreview';
 
 const testData = {
-  id: 24680,
-  imageSrc:
-    'https://images.blur.io/_blur-prod/0x60e4d786628fea6478f785a6d7e704777c86a7c6/24680-e4843c17252bc7d4?w=256',
-  price: 15.23,
-  lastPrice: 12.34,
-  owner: '0x2C9B14746e92cE68468D978C69F5a006Cb3CCF10',
+  id: 1,
+  name: 'Rick Sanchez',
+  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+  status: 'Alive',
 };
 
 test('Card component renders correctly', () => {
   render(<Card data={testData} />);
 
   const image = screen.getByAltText('Card preview');
-  expect(image).toHaveAttribute('src', testData.imageSrc);
+  expect(image).toHaveAttribute('src', testData.image);
 
-  const id = screen.getByText(`#${testData.id}`);
-  expect(id).toBeInTheDocument();
+  const name = screen.getByText(testData.name);
+  expect(name).toBeInTheDocument();
 
-  const price = screen.getByText(`${testData.price} ETH`);
-  expect(price).toBeInTheDocument();
-
-  const lastPrice = screen.getByText(`Last sale: ${testData.lastPrice} ETH`);
-  expect(lastPrice).toBeInTheDocument();
-
-  const owner = screen.getByText(`Owner: ${testData.owner}`);
-  expect(owner).toBeInTheDocument();
+  const status = screen.getByText(testData.status);
+  expect(status).toBeInTheDocument();
 });

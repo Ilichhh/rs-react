@@ -22,7 +22,6 @@ export const getSingleCharacter = async (id: number): Promise<CardFullData | und
   try {
     const res = await fetch(`${BASE_URL}/character/${id}`);
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
