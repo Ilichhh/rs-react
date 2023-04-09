@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { CloseIcon } from '../assets/icons';
 
-interface ModalContextProps {
+export interface ModalContextProps {
   isOpen: boolean;
   openModal: (content: React.ReactNode) => void;
   closeModal: () => void;
