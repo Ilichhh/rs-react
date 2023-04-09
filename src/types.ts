@@ -13,6 +13,12 @@ export interface CardFullData {
   species: string;
   type: string;
   gender: string;
+  origin: {
+    name: string;
+  };
+  location: {
+    name: string;
+  };
 }
 
 export interface FormInputs {

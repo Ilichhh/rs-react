@@ -24,7 +24,7 @@ function Character({ id }: ModalProps) {
   if (isError) return <StatusMessage status="error" />;
   if (!charData) return <StatusMessage status="loading" />;
 
-  const { image, name, status, species, type, gender } = charData;
+  const { image, name, status, species, type, gender, origin, location } = charData;
 
   return (
     <div className="character">
@@ -33,8 +33,10 @@ function Character({ id }: ModalProps) {
         <div className="character__name">{name}</div>
         <div className="character__param">Status: {status}</div>
         <div className="character__param">Species: {species}</div>
-        <div className="character__param">Type: {type}</div>
+        <div className="character__param">Type: {type || '---'}</div>
         <div className="character__param">Gender: {gender}</div>
+        <div className="character__param">Origin: {origin.name}</div>
+        <div className="character__param">Location: {location.name}</div>
       </div>
     </div>
   );
