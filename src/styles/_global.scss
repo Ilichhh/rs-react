@@ -6,6 +6,11 @@ html {
   color: $main-color;
 }
 
+#root:has(.modal) {
+  height: 100vh;
+  overflow: hidden;
+}
+
 .container {
   width: calc(100% - 40px);
   max-width: 1200px;

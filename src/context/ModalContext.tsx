@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import { CloseIcon } from '../assets/icons';
 
 interface ModalContextProps {
@@ -22,17 +22,6 @@ interface ModalProviderProps {
 function ModalProvider({ children }: ModalProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState<React.ReactNode>(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
 
   const openModal = (content: React.ReactNode) => {
     setIsOpen(true);
