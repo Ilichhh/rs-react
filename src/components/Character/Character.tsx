@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getSingleCharacter } from '../../api/api';
+import { getSingleCharacter } from '../../api/apiOld';
 import StatusMessage from '../StatusMessage/StatusMessage';
 import type { CardFullData } from 'types';
 import './Character.scss';

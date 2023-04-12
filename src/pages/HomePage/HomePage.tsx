@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CardPreview from '../../components/CardPreview/CardPreview';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { getCharacters } from '../../api/api';
+import { getCharacters } from '../../api/apiOld';
 import { CardPreviewData } from 'types';
 import StatusMessage from '../../components/StatusMessage/StatusMessage';
 import './HomePage.scss';

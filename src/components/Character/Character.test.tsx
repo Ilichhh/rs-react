@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react';
 import Character from './Character';
 import { vi, Mock } from 'vitest';
 import { CardFullData } from 'types';
-import { getSingleCharacter } from '../../api/api';
+import { getSingleCharacter } from '../../api/apiOld';
 
 const mockCharData: CardFullData = {
   id: 1,
