@@ -1,33 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CardPreview from '../../components/CardPreview/CardPreview';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { getCharacters } from '../../api/apiOld';
-import { CardPreviewData } from 'types';
 import StatusMessage from '../../components/StatusMessage/StatusMessage';
 import './HomePage.scss';
+import { useGetCharactersQuery } from '../../api/api';
 
 function HomePage() {
-  const [cards, setCards] = useState<CardPreviewData[] | null>(null);
-  const [isError, setIsError] = useState(false);
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
-
-  useEffect(() => {
-    const setCardsData = async () => {
-      setCards(null);
-      setIsError(false);
-      const cardsData = await getCharacters(searchValue);
-      cardsData ? setCards(cardsData) : setIsError(true);
-    };
-    setCardsData();
-  }, [searchValue]);
+  const { data, isLoading, isError } = useGetCharactersQuery(searchValue);
 
   let cardsContent;
   if (isError) cardsContent = <StatusMessage status="error" />;
-  else if (!cards) cardsContent = <StatusMessage status="loading" />;
+  else if (isLoading || !data) cardsContent = <StatusMessage status="loading" />;
   else
     cardsContent = (
       <div className="cards-wrapper">
-        {cards.map((item) => (
+        {data.map((item) => (
           <CardPreview key={item.id} data={item} />
         ))}
       </div>

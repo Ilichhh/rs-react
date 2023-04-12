@@ -5,6 +5,10 @@ export interface CardPreviewData {
   image: string;
 }
 
+export interface CardsResponse {
+  results: CardPreviewData[];
+}
+
 export interface CardFullData {
   id: number;
   name: string;
