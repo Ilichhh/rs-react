@@ -1,5 +1,5 @@
 import { test, expect, vi, Mock } from 'vitest';
-import { render, screen, act, cleanup } from '@testing-library/react';
+import { render, act, cleanup } from '@testing-library/react';
 import { CardPreviewData } from 'types';
 import { getCharacters } from '../../api/api';
 
