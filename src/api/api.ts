@@ -3,7 +3,7 @@ import { CardFullData, CardPreviewData, CardsResponse } from 'types';
 
 export const rickAndMortyApi = createApi({
   reducerPath: 'rickAndMortyApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://rickandmortyapi.com/api/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL }),
   endpoints: (build) => ({
     getSingleCharacter: build.query<CardFullData, string>({
       query: (id) => `character/${id}`,
