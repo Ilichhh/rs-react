@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ModalProvider } from './context/ModalContext';
 import App from './App';
-import { store } from './store/index';
+import { store } from './store/store';
 import './index.scss';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

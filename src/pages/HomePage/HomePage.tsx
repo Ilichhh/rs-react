@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import CardPreview from '../../components/CardPreview/CardPreview';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import StatusMessage from '../../components/StatusMessage/StatusMessage';
-import './HomePage.scss';
 import { useGetCharactersQuery } from '../../api/api';
+import './HomePage.scss';
+
+import { RootState } from '../../store/store';
 
 function HomePage() {
-  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
+  const dispatch = useDispatch();
+  const searchValue = useSelector((state: RootState) => state.search.value);
   const { data, isLoading, isError } = useGetCharactersQuery(searchValue);
 
   let cardsContent;
@@ -25,7 +30,7 @@ function HomePage() {
     <>
       <div className="home">
         <h1>Home page</h1>
-        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
+        <SearchBar />
         {cardsContent}
       </div>
     </>
