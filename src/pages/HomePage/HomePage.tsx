@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import CardPreview from '../../components/CardPreview/CardPreview';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -8,18 +8,25 @@ import { useGetCharactersQuery } from '../../api/api';
 import './HomePage.scss';
 
 import { RootState } from '../../store/store';
+import { setCharactersData } from '../../features/characterCardsSlice';
 
 function HomePage() {
+  const dispatch = useDispatch();
   const searchValue = useSelector((state: RootState) => state.search.value);
   const { data, isLoading, isError } = useGetCharactersQuery(searchValue);
+  const searchResults = useSelector((state: RootState) => state.characters.characters);
+
+  useEffect(() => {
+    if (data) dispatch(setCharactersData(data));
+  }, [data, dispatch]);
 
   let cardsContent;
   if (isError) cardsContent = <StatusMessage status="error" />;
-  else if (isLoading || !data) cardsContent = <StatusMessage status="loading" />;
+  else if (isLoading || !searchResults) cardsContent = <StatusMessage status="loading" />;
   else
     cardsContent = (
       <div className="cards-wrapper">
-        {data.map((item) => (
+        {searchResults.map((item) => (
           <CardPreview key={item.id} data={item} />
         ))}
       </div>
