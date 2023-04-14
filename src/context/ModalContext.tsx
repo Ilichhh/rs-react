@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { CloseIcon } from '../assets/icons';
 
 export interface ModalContextProps {
@@ -33,6 +34,18 @@ function ModalProvider({ children }: ModalProviderProps) {
     setContent(null);
   };
 
+  const modal = (
+    <>
+      <div className="modal__background" onClick={closeModal}></div>
+      <div className="modal">
+        {content}
+        <button className="modal__close-btn" onClick={closeModal}>
+          <CloseIcon />
+        </button>
+      </div>
+    </>
+  );
+
   const value: ModalContextProps = {
     isOpen,
     openModal,
@@ -43,17 +56,7 @@ function ModalProvider({ children }: ModalProviderProps) {
   return (
     <ModalContext.Provider value={value}>
       {children}
-      {isOpen && (
-        <>
-          <div className="modal__background" onClick={closeModal}></div>
-          <div className="modal">
-            {content}
-            <button className="modal__close-btn" onClick={closeModal}>
-              <CloseIcon />
-            </button>
-          </div>
-        </>
-      )}
+      {isOpen && ReactDOM.createPortal(modal, document.body)}
     </ModalContext.Provider>
   );
 }
