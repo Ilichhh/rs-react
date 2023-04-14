@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import CardPreview from '../../components/CardPreview/CardPreview';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -10,7 +10,6 @@ import './HomePage.scss';
 import { RootState } from '../../store/store';
 
 function HomePage() {
-  const dispatch = useDispatch();
   const searchValue = useSelector((state: RootState) => state.search.value);
   const { data, isLoading, isError } = useGetCharactersQuery(searchValue);
 
