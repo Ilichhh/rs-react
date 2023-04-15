@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+
+.character {
+  display: flex;
+  gap: 20px;
+
+  &__image {
+    height: 360px;
+
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 2px rgb(0 0 0 / 32%);
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__name {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  &__param {
+    color: $secondary-color;
+  }
+}

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { SearchIcon } from '../../assets/icons';
 import './SearchBar.scss';
 
 interface SearchBarProps {
-  onSearch: (searchValue: string) => void;
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function SearchBar(props: SearchBarProps) {
-  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
-
+function SearchBar({ setSearchValue, searchValue }: SearchBarProps) {
   useEffect(() => {
     const handleBeforeUnload = () => {
       localStorage.setItem('searchValue', searchValue);
@@ -22,10 +21,10 @@ function SearchBar(props: SearchBarProps) {
     };
   }, [searchValue]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSearchValue(value);
-    props.onSearch(value);
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setSearchValue(event.currentTarget.value);
+    }
   };
 
   return (
@@ -36,8 +35,8 @@ function SearchBar(props: SearchBarProps) {
           type="text"
           placeholder="Search..."
           className="search__input"
-          value={searchValue}
-          onChange={handleInputChange}
+          defaultValue={searchValue}
+          onKeyDown={handleSearch}
         />
       </div>
     </div>
