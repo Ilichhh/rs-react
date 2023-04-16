@@ -6,15 +6,36 @@ export interface ModalContextProps {
   isOpen: boolean;
   openModal: (content: React.ReactNode) => void;
   closeModal: () => void;
-  content: React.ReactNode;
 }
 
 const ModalContext = createContext<ModalContextProps>({
   isOpen: false,
   openModal: () => {},
   closeModal: () => {},
-  content: null,
 });
+
+interface ModalProps {
+  isOpen: boolean;
+  content: React.ReactNode;
+  onClose: () => void;
+}
+
+function Modal({ isOpen, content, onClose }: ModalProps) {
+  if (!isOpen) return null;
+
+  return ReactDOM.createPortal(
+    <>
+      <div className="modal__background" onClick={onClose}></div>
+      <div className="modal">
+        {content}
+        <button className="modal__close-btn" onClick={onClose}>
+          <CloseIcon />
+        </button>
+      </div>
+    </>,
+    document.body
+  );
+}
 
 interface ModalProviderProps {
   children: React.ReactNode;
@@ -34,29 +55,16 @@ function ModalProvider({ children }: ModalProviderProps) {
     setContent(null);
   };
 
-  const modal = (
-    <>
-      <div className="modal__background" onClick={closeModal}></div>
-      <div className="modal">
-        {content}
-        <button className="modal__close-btn" onClick={closeModal}>
-          <CloseIcon />
-        </button>
-      </div>
-    </>
-  );
-
   const value: ModalContextProps = {
     isOpen,
     openModal,
     closeModal,
-    content,
   };
 
   return (
     <ModalContext.Provider value={value}>
       {children}
-      {isOpen && ReactDOM.createPortal(modal, document.body)}
+      <Modal isOpen={isOpen} content={content} onClose={closeModal} />
     </ModalContext.Provider>
   );
 }
