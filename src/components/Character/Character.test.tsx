@@ -31,6 +31,10 @@ describe('Character component', () => {
     })
   );
 
+  beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
+
   it('should render character data', async () => {
     server.listen();
     await act(async () => {
