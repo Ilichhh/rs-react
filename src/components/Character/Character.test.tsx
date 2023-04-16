@@ -1,39 +1,45 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { setupServer } from 'msw/node';
+import { rest } from 'msw';
+
 import Character from './Character';
-import { vi, Mock } from 'vitest';
+import { store } from '../../store/store';
 import { CardFullData } from 'types';
-import { getSingleCharacter } from '../../api/apiOld';
-
-const mockCharData: CardFullData = {
-  id: 1,
-  name: 'Rick Sanchez',
-  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-  status: 'Alive',
-  species: 'Human',
-  type: '',
-  gender: 'Male',
-  origin: {
-    name: 'Earth (C-137)',
-  },
-  location: {
-    name: 'Earth (Replacement Dimension)',
-  },
-};
-
-global.fetch = vi.fn(() =>
-  Promise.resolve({
-    json: () => Promise.resolve(mockCharData),
-  })
-) as Mock;
 
 describe('Character component', () => {
-  it('should render character data', async () => {
-    await act(async () => {
-      render(<Character id={mockCharData.id} />);
-    });
+  const mockCharData: CardFullData = {
+    id: 1,
+    name: 'Rick Sanchez',
+    image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+    status: 'Alive',
+    species: 'Human',
+    type: '',
+    gender: 'Male',
+    origin: {
+      name: 'Earth (C-137)',
+    },
+    location: {
+      name: 'Earth (Replacement Dimension)',
+    },
+  };
 
-    await getSingleCharacter(mockCharData.id);
+  const server = setupServer(
+    rest.get(`${import.meta.env.VITE_BASE_URL}character/${mockCharData.id}`, (_, res, ctx) => {
+      return res(ctx.status(200), ctx.json(mockCharData));
+    })
+  );
+
+  it('should render character data', async () => {
+    server.listen();
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <Character id={mockCharData.id} />
+        </Provider>
+      );
+    });
 
     expect(screen.getByAltText('Card preview')).toBeInTheDocument();
     expect(screen.getByText(mockCharData.name)).toBeInTheDocument();

@@ -1,7 +1,7 @@
 import { test, expect, vi, Mock } from 'vitest';
 import { render, act, cleanup } from '@testing-library/react';
 import { CardPreviewData } from 'types';
-import { getCharacters } from '../../api/apiOld';
+import { useGetCharactersQuery } from '../../api/api';
 
 import React from 'react';
 import HomePage from './HomePage';
@@ -53,7 +53,7 @@ describe('HomePage', () => {
       render(<HomePage />);
     });
 
-    await getCharacters('Rick');
+    await useGetCharactersQuery('Rick');
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     expect(document.querySelector('.status-message')).toHaveTextContent(
