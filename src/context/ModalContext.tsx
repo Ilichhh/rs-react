@@ -3,14 +3,12 @@ import ReactDOM from 'react-dom';
 import { CloseIcon } from '../assets/icons';
 
 export interface ModalContextProps {
-  isOpen: boolean;
   openModal: (content: React.ReactNode) => void;
   closeModal: () => void;
   content: React.ReactNode;
 }
 
 const ModalContext = createContext<ModalContextProps>({
-  isOpen: false,
   openModal: () => {},
   closeModal: () => {},
   content: null,
@@ -21,16 +19,13 @@ interface ModalProviderProps {
 }
 
 function ModalProvider({ children }: ModalProviderProps) {
-  const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState<React.ReactNode>(null);
 
   const openModal = useCallback((content: React.ReactNode) => {
-    setIsOpen(true);
     setContent(content);
   }, []);
 
   const closeModal = useCallback(() => {
-    setIsOpen(false);
     setContent(null);
   }, []);
 
@@ -51,18 +46,17 @@ function ModalProvider({ children }: ModalProviderProps) {
 
   const value = useMemo(
     () => ({
-      isOpen,
       openModal,
       closeModal,
       content,
     }),
-    [isOpen, openModal, closeModal, content]
+    [openModal, closeModal, content]
   );
 
   return (
     <ModalContext.Provider value={value}>
       {children}
-      {isOpen && ReactDOM.createPortal(modal, document.body)}
+      {content && ReactDOM.createPortal(modal, document.body)}
     </ModalContext.Provider>
   );
 }
