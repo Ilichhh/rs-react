@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import CardPreview from '../../components/CardPreview/CardPreview';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { getCharacters } from '../../api/api';
-import { CardPreviewData } from 'types';
 import StatusMessage from '../../components/StatusMessage/StatusMessage';
+import { useGetCharactersQuery } from '../../api/api';
 import './HomePage.scss';
 
+import { RootState } from '../../store/store';
+import { setCharactersData } from '../../features/characterCardsSlice';
+
 function HomePage() {
-  const [cards, setCards] = useState<CardPreviewData[] | null>(null);
-  const [isError, setIsError] = useState(false);
-  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
+  const dispatch = useDispatch();
+  const searchValue = useSelector((state: RootState) => state.search.value);
+  const { data, isLoading, isError } = useGetCharactersQuery(searchValue);
+  const searchResults = useSelector((state: RootState) => state.characters.characters);
 
   useEffect(() => {
-    const setCardsData = async () => {
-      setCards(null);
-      setIsError(false);
-      const cardsData = await getCharacters(searchValue);
-      cardsData ? setCards(cardsData) : setIsError(true);
-    };
-    setCardsData();
-  }, [searchValue]);
+    if (data) dispatch(setCharactersData(data));
+  }, [data, dispatch]);
 
   let cardsContent;
   if (isError) cardsContent = <StatusMessage status="error" />;
-  else if (!cards) cardsContent = <StatusMessage status="loading" />;
+  else if (isLoading || !searchResults) cardsContent = <StatusMessage status="loading" />;
   else
     cardsContent = (
       <div className="cards-wrapper">
-        {cards.map((item) => (
+        {searchResults.map((item) => (
           <CardPreview key={item.id} data={item} />
         ))}
       </div>
@@ -37,7 +36,7 @@ function HomePage() {
     <>
       <div className="home">
         <h1>Home page</h1>
-        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
+        <SearchBar />
         {cardsContent}
       </div>
     </>

@@ -1,15 +1,14 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useMemo, useCallback } from 'react';
+import ReactDOM from 'react-dom';
 import { CloseIcon } from '../assets/icons';
 
 export interface ModalContextProps {
-  isOpen: boolean;
   openModal: (content: React.ReactNode) => void;
   closeModal: () => void;
   content: React.ReactNode;
 }
 
 const ModalContext = createContext<ModalContextProps>({
-  isOpen: false,
   openModal: () => {},
   closeModal: () => {},
   content: null,
@@ -20,40 +19,44 @@ interface ModalProviderProps {
 }
 
 function ModalProvider({ children }: ModalProviderProps) {
-  const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState<React.ReactNode>(null);
 
-  const openModal = (content: React.ReactNode) => {
-    setIsOpen(true);
+  const openModal = useCallback((content: React.ReactNode) => {
     setContent(content);
-  };
+  }, []);
 
-  const closeModal = () => {
-    setIsOpen(false);
+  const closeModal = useCallback(() => {
     setContent(null);
-  };
+  }, []);
 
-  const value: ModalContextProps = {
-    isOpen,
-    openModal,
-    closeModal,
-    content,
-  };
+  const modal = useMemo(
+    () => (
+      <>
+        <div className="modal__background" onClick={closeModal}></div>
+        <div className="modal">
+          {content}
+          <button className="modal__close-btn" onClick={closeModal}>
+            <CloseIcon />
+          </button>
+        </div>
+      </>
+    ),
+    [closeModal, content]
+  );
+
+  const value = useMemo(
+    () => ({
+      openModal,
+      closeModal,
+      content,
+    }),
+    [openModal, closeModal, content]
+  );
 
   return (
     <ModalContext.Provider value={value}>
       {children}
-      {isOpen && (
-        <>
-          <div className="modal__background" onClick={closeModal}></div>
-          <div className="modal">
-            {content}
-            <button className="modal__close-btn" onClick={closeModal}>
-              <CloseIcon />
-            </button>
-          </div>
-        </>
-      )}
+      {content && ReactDOM.createPortal(modal, document.body)}
     </ModalContext.Provider>
   );
 }

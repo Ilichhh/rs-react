@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
 import Form from '../../components/Form/Form';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import { ProductData } from 'types';
 import './FormPage.scss';
 
-function FormPage() {
-  const [productsList, setProductsList] = useState<ProductData[]>([]);
+import { RootState } from '../../store/store';
 
-  const handleAddProduct = (newProduct: ProductData) => {
-    setProductsList((prevState) => [...prevState, newProduct]);
-  };
+function FormPage() {
+  const productsList = useSelector((state: RootState) => state.products.products);
 
   return (
     <>
       <div className="form-wrapper">
         <h1>Place your NFT for sale</h1>
-        <Form onAddProduct={handleAddProduct} />
+        <Form />
       </div>
       <div className="cards-wrapper">
         {productsList.map((item, index) => (

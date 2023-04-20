@@ -6,7 +6,7 @@ html {
   color: $main-color;
 }
 
-#root:has(.modal) {
+body:has(.modal) {
   height: 100vh;
   overflow: hidden;
 }

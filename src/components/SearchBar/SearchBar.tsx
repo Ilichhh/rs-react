@@ -1,29 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { SearchIcon } from '../../assets/icons';
+import { setSearchValue } from '../../features/searchSlice';
 import './SearchBar.scss';
 
-interface SearchBarProps {
-  searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-}
+import { RootState } from '../../store/store';
 
-function SearchBar({ setSearchValue, searchValue }: SearchBarProps) {
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      localStorage.setItem('searchValue', searchValue);
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      localStorage.setItem('searchValue', searchValue);
-    };
-  }, [searchValue]);
+function SearchBar() {
+  const dispatch = useDispatch();
+  const searchValue = useSelector((state: RootState) => state.search.value);
 
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      setSearchValue(event.currentTarget.value);
+      dispatch(setSearchValue(event.currentTarget.value));
     }
   };
 

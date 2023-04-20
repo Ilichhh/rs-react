@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+
 import FormInput from '../../components/FormInput/FormInput';
 import AddImageButton from '../../components/AddImageButton/AddImageButton';
 import DropdownInput from '../../components/DropdownInput/DropdownInput';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import RadioInput from '../../components/RadioInput/RadioInput';
 import { networks, mainnetSelector } from '../../data';
-import { ProductData } from 'types';
 import './Form.scss';
 import '../FormInput/FormInput.scss';
 
-interface FormProps {
-  onAddProduct: (newProduct: ProductData) => void;
-}
+import { addProduct } from '../../features/productCardsSlice';
 
-function Form({ onAddProduct }: FormProps) {
+function Form() {
   const {
     register,
     handleSubmit,
@@ -22,6 +21,7 @@ function Form({ onAddProduct }: FormProps) {
     reset,
     clearErrors,
   } = useForm();
+  const dispatch = useDispatch();
 
   const [buttonText, setButtonText] = useState('Submit');
 
@@ -36,15 +36,17 @@ function Form({ onAddProduct }: FormProps) {
     if (isValid) {
       reset();
       clearErrors();
-      onAddProduct({
-        title: data.title,
-        price: data.price,
-        imageSrc,
-        date: data.date,
-        network: data.network,
-        mainnet: data.mainnet,
-        agreement: data.agreement,
-      });
+      dispatch(
+        addProduct({
+          title: data.title,
+          price: data.price,
+          imageSrc,
+          date: data.date,
+          network: data.network,
+          mainnet: data.mainnet,
+          agreement: data.agreement,
+        })
+      );
       setButtonText('Your NFT has been placed!');
       setTimeout(() => {
         setButtonText('Submit');

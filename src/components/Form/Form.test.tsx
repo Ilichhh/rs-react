@@ -1,13 +1,17 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { suite, test, vi } from 'vitest';
-import { fn } from '@vitest/spy';
 import Form from './Form';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 suite('Form', () => {
   test('renders all input fields', () => {
-    const onAddProduct = vi.fn();
-    const { getByLabelText, getByText } = render(<Form onAddProduct={onAddProduct} />);
+    const { getByLabelText, getByText } = render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
     expect(getByLabelText('Item Name')).toBeInTheDocument();
     expect(getByLabelText('Start Price')).toBeInTheDocument();
     expect(getByLabelText('End of sale date')).toBeInTheDocument();
@@ -20,8 +24,11 @@ suite('Form', () => {
 
   test('displays error message if required fields are not filled out', async () => {
     const onAddProduct = vi.fn();
-    const { findByText, getByText } = render(<Form onAddProduct={onAddProduct} />);
-
+    const { findByText, getByText } = render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
     fireEvent.click(getByText('Submit'));
 
     expect(await findByText("Please enter item's name")).toBeInTheDocument();
@@ -36,11 +43,13 @@ suite('Form', () => {
   });
 
   test('display correct values when all required fields are filled out', async () => {
-    const onAddProduct = fn();
-
     const mockCreateObjectURL = vi.fn();
     global.URL.createObjectURL = mockCreateObjectURL;
-    const { getByLabelText, getByRole, getByText } = render(<Form onAddProduct={onAddProduct} />);
+    const { getByLabelText, getByRole, getByText } = render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
 
     fireEvent.input(getByLabelText('Item Name'), { target: { value: 'My NFT' } });
     fireEvent.input(getByLabelText('Start Price'), { target: { value: '10' } });
